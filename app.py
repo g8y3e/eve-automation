@@ -1,26 +1,18 @@
-import threading
 import sys
+import threading
 from time import sleep
 
 import gi
 gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk
-import pyautogui
+from gi.repository import Gtk, Gdk
 
-from kill_enemy import KillEnemy
+import action
+import helper
+from config import Config
+config = Config().get()
 
-screen_width, screen_height = pyautogui.size()
-
-window_width = 200
-window_height = 100
-
-window_title = "EVE automation"
-
-active_eve_pos = 720, 30
-
-
-def mousepos():
-    return pyautogui.position()
+from process.kill_enemy import KillEnemy
+from process.travel import Travel
 
 
 class MouseThread(threading.Thread):
@@ -35,7 +27,7 @@ class MouseThread(threading.Thread):
             while True:
                 if self.stopped():
                     break
-                pos = mousepos()
+                pos = helper.get_mouse_pos()
 
                 self.x_pos_label.set_text("X: {};".format(pos[0]))
                 self.y_pos_label.set_text("Y: {};".format(pos[1]))
@@ -54,11 +46,21 @@ class EVEWindow(Gtk.Window):
     def __init__(self, title):
         Gtk.Window.__init__(self, title=title)
 
+        helper.clear_clipboard()
+
         self.set_border_width(10)
-        self.set_default_size(window_width, window_height)
-        self.move(screen_width / 2 - window_width / 2, screen_height / 2 - window_height / 2)
+
+        window_size = config["window"]["size"]
+        self.set_default_size(*window_size)
+
+        screen_size = helper.get_screen_size()
+        self.move(screen_size[0] / 2 - window_size[0] / 2, screen_size[1] / 2 - window_size[1] / 2)
 
         self.connect("destroy", self.quit)
+
+        # connect the key-press event - this will call the keypress
+        # handler when any key is pressed
+        self.connect("key-press-event", self.on_key_press_event)
 
         hbox = Gtk.Box(spacing=10)
         hbox.set_homogeneous(False)
@@ -83,23 +85,33 @@ class EVEWindow(Gtk.Window):
         self.mouseThread = MouseThread(self, self.x_pos_label, self.y_pos_label)
         self.mouseThread.start()
 
-        self.active_eve()
+        action.active_eve()
 
         kill = KillEnemy()
-        kill.start()
+        #kill.start()
 
-    def active_eve(self):
-        pyautogui.moveTo(*active_eve_pos, duration=1.0)
-        pyautogui.click()
+        travel = Travel()
+        travel.set_iter_jump()
+        travel.start()
 
     def on_button_clicked(self, widget):
         print("Hello World")
+
+    def on_key_press_event(self, widget, event):
+
+        print("Key press on widget: ", widget)
+        print("          Modifiers: ", event.state)
+        print("      Key val, name: ", event.keyval, Gdk.keyval_name(event.keyval))
+
+        # see if we recognise a keypress
+        if event.keyval == Gdk.KEY_q:
+            self.quit(widget)
 
     def quit(self, widget):
         self.mouseThread.kill()
         Gtk.main_quit()
 
-win = EVEWindow(window_title)
+win = EVEWindow(config["window"]["title"])
 
 win.show_all()
 Gtk.main()

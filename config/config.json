@@ -1,0 +1,27 @@
+{
+  "window": {
+    "size": [200, 100],
+    "title": "EVE automation"
+  },
+  "main": {
+    "active_eve_pos": [720, 30],
+    "copy_target_data_pos": [1036, 97],
+    "align_target_pos": [986, 133],
+    "travel_pos": [1050, 133],
+    "travel_title_pos": [75, 152],
+    "lock_target_pos": [1117, 133],
+
+    "warp_bar_pos": [1128, 205],
+    "enemy_bar_pos": [1090, 208],
+    "bar_item_pos": [1092, 246],
+    "warp_dock_pos": [1050, 133]
+  },
+  "combat": {
+    "optimal_distance": 40
+  },
+  "ship": {
+    "max_speed": 400,
+    "speed_module_pos": [762, 608],
+    "missile_module_pos": [812, 607]
+  }
+}
