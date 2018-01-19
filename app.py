@@ -13,6 +13,9 @@ config = Config().get()
 
 from process.kill_enemy import KillEnemy
 from process.travel import Travel
+from process.loot_wreck import LootWreck
+
+warp_bar_pos = config["main"]["warp_bar_pos"]
 
 
 class MouseThread(threading.Thread):
@@ -88,11 +91,14 @@ class EVEWindow(Gtk.Window):
         action.active_eve()
 
         kill = KillEnemy()
-        #kill.start()
+        kill.start()
 
         travel = Travel()
         travel.set_iter_jump()
-        travel.start()
+        #travel.start()
+
+        lootWreck = LootWreck()
+        lootWreck.start()
 
     def on_button_clicked(self, widget):
         print("Hello World")

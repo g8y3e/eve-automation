@@ -24,7 +24,7 @@ class KillEnemy(Process):
             target_info = action.parse_target_data(action.get_target_data())
             target_distance = action.parse_distance(target_info["distance"])
 
-            log.info('target name: ' + target_info["name"])
+            log.info('\ntarget name: ' + target_info["name"])
 
             if target_info["name"] == "empty":
                 break
@@ -35,7 +35,7 @@ class KillEnemy(Process):
             log.info('lock target')
             action.click_pos(lock_target_pos)
 
-            #action.click_pos(missile_module_pos)
+            action.click_pos(missile_module_pos)
 
             log.info('killing target')
             action.destroy_target()

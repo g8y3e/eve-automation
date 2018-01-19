@@ -4,6 +4,7 @@
     "title": "EVE automation"
   },
   "main": {
+    "item_bar_end_y": 740,
     "active_eve_pos": [720, 30],
     "copy_target_data_pos": [1036, 97],
     "align_target_pos": [986, 133],
@@ -12,12 +13,19 @@
     "lock_target_pos": [1117, 133],
 
     "warp_bar_pos": [1128, 205],
-    "enemy_bar_pos": [1090, 208],
+    "enemy_bar_pos": [1090, 205],
+    "wreck_tab_pos": [1176, 205],
+
     "bar_item_pos": [1092, 246],
-    "warp_dock_pos": [1050, 133]
+    "warp_dock_loot_pos": [1050, 133],
+    "drone_in_bay_pos": [104, 420],
+    "close_inventory_pos": [888, 152],
+    "loot_all_pos": [496, 570]
   },
   "combat": {
-    "optimal_distance": 40
+    "optimal_distance": 40000,
+    "loot_distance": 2000,
+    "rare_ship_name": ["Dread", "Sentient", "Shadow Serpentis"]
   },
   "ship": {
     "max_speed": 400,

@@ -1,6 +1,9 @@
 import pyautogui
 
 from time import sleep
+import copy
+
+import log
 
 import helper
 from config import Config
@@ -17,11 +20,19 @@ align_target_pos = config["main"]["align_target_pos"]
 warp_bar_pos = config["main"]["warp_bar_pos"]
 warp_gate_pos = config["main"]["bar_item_pos"]
 
+drone_in_bay_pos = config["main"]["drone_in_bay_pos"]
+
+item_bar_end_y = config["main"]["item_bar_end_y"]
+
+
 # ship constant
 optimal_distance = config["combat"]["optimal_distance"]  # km
 
 max_speed = config["ship"]["max_speed"]  # m/s
 speed_module_pos = config["ship"]["speed_module_pos"]
+
+# fight
+enemy_pos = config["main"]["bar_item_pos"]
 
 
 def active_eve():
@@ -47,7 +58,6 @@ def parse_target_data(data):
         }
 
     infos = data.split("<br>")
-    print(infos)
 
     result = dict()
     result["name"] = infos[0]
@@ -73,7 +83,7 @@ def parse_distance(distance):
     return info
 
 
-def fly_to_target(distance, opt_distance=optimal_distance, max_speed=max_speed):
+def fly_to_target(distance, opt_distance=optimal_distance, speed=max_speed):
     pyautogui.moveTo(*speed_module_pos, duration=0.5)
     pyautogui.click()
 
@@ -81,17 +91,20 @@ def fly_to_target(distance, opt_distance=optimal_distance, max_speed=max_speed):
         pyautogui.moveTo(*align_target_pos, duration=0.5)
         pyautogui.click()
 
-        wait_time = ((distance - opt_distance) * 1000) / (max_speed * 2)
+        wait_time = (distance - opt_distance) / (speed * 2)
+        log.info("estimated flying time: " + str(wait_time) + ' sec')
         if wait_time > 0:
             sleep(wait_time)
 
         target_info = parse_target_data(get_target_data())
         target_distance = parse_distance(target_info["distance"])
 
-        if target_distance["metric"] != "km":
+        if distance <= opt_distance:
             break
 
         distance = target_distance["number"]
+        if target_distance["metric"] == "km":
+            distance *= 1000
 
     pyautogui.moveTo(*speed_module_pos, duration=0.25)
     pyautogui.click()
@@ -129,12 +142,45 @@ def get_jump_title_data():
 
     return helper.get_data_from_clipboard()
 
+
 def init_gate_warp():
     click_pos(warp_bar_pos)
     click_pos(warp_gate_pos)
 
 
-def click_pos(click_pos):
-    pyautogui.moveTo(*click_pos, duration=0.5)
+def click_pos(click_pos, duration=0.5):
+    pyautogui.moveTo(*click_pos, duration=duration)
     pyautogui.click()
+
+
+def find_item_in_bar(bar_pos, ship_names):
+    click_pos(bar_pos)
+
+    item_pos = copy.deepcopy(enemy_pos)
+    prev_name = ""
+    while True:
+        click_pos(item_pos)
+
+        target_info = parse_target_data(get_target_data())
+
+        if len(prev_name) > 0 and prev_name == target_info["name"]:
+            click_pos(drone_in_bay_pos)
+            drone_in_bay_info = parse_target_data(get_target_data())
+
+            click_pos(item_pos)
+            target_info = parse_target_data(get_target_data())
+
+            if drone_in_bay_info["name"] == target_info["name"]:
+                return None
+
+        prev_name = target_info["name"]
+
+        for item in ship_names:
+            if item in target_info["name"]:
+                return item_pos
+
+        item_pos[1] = item_pos[1] + 20
+
+        if item_pos[1] > item_bar_end_y:
+            return None
 

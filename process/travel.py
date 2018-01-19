@@ -9,7 +9,7 @@ import action
 from config import Config
 config = Config().get()
 
-warp_pos = config["main"]["warp_dock_pos"]
+warp_pos = config["main"]["warp_dock_loot_pos"]
 
 
 class Travel(Process):
@@ -51,3 +51,4 @@ class Travel(Process):
         log.info('# end travel process!')
 
 # TFL-699	Cosmic Anomaly	Combat Site	Guristas Hidden Hideaway	100.0%	10.96 AU
+# Suroken IX - Moon 2 - Core Complexion Inc. Factory<br>Distance: 11.9 AU
