@@ -1,11 +1,10 @@
 from process import Process
 
 import action
-import log
-from config import Config
-config = Config().get()
+from log import log
+from config import config
 
-wreck_tab_pos = config["main"]["wreck_tab_pos"]
+wreck_bar_pos = config["main"]["wreck_bar_pos"]
 rare_ship_name = config["combat"]["rare_ship_name"]
 loot_distance = config["combat"]["loot_distance"]
 
@@ -17,9 +16,9 @@ close_inventory_pos = config["main"]["close_inventory_pos"]
 
 class LootWreck(Process):
     def start(self):
+        log.init_time()
         log.info('# start looting wreck')
-        l = ['Pithior Nihilist']
-        item_pos = action.find_item_in_bar(wreck_tab_pos, l)
+        item_pos = action.find_item_in_bar(wreck_bar_pos, rare_ship_name)
 
         if item_pos is not None:
             # move to wreck
@@ -43,4 +42,5 @@ class LootWreck(Process):
             action.click_pos(loot_all_pos, 2)
             action.click_pos(close_inventory_pos)
 
+        log.info('# elapsed time: ' + str(log.elapsed_time()) + ' sec')
         log.info('# end looting wreck')

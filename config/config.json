@@ -1,35 +1,95 @@
 {
-  "window": {
-    "size": [200, 100],
-    "title": "EVE automation"
-  },
-  "main": {
-    "item_bar_end_y": 740,
-    "active_eve_pos": [720, 30],
-    "copy_target_data_pos": [1036, 97],
-    "align_target_pos": [986, 133],
-    "travel_pos": [1050, 133],
-    "travel_title_pos": [75, 152],
-    "lock_target_pos": [1117, 133],
-
-    "warp_bar_pos": [1128, 205],
-    "enemy_bar_pos": [1090, 205],
-    "wreck_tab_pos": [1176, 205],
-
-    "bar_item_pos": [1092, 246],
-    "warp_dock_loot_pos": [1050, 133],
-    "drone_in_bay_pos": [104, 420],
-    "close_inventory_pos": [888, 152],
-    "loot_all_pos": [496, 570]
-  },
-  "combat": {
-    "optimal_distance": 40000,
-    "loot_distance": 2000,
-    "rare_ship_name": ["Dread", "Sentient", "Shadow Serpentis"]
-  },
-  "ship": {
-    "max_speed": 400,
-    "speed_module_pos": [762, 608],
-    "missile_module_pos": [812, 607]
-  }
+    "window": {
+        "size": [
+            200,
+            100
+        ],
+        "title": "EVE automation"
+    },
+    "main": {
+        "item_bar_end_y": 740,
+        "anomaly_list_end_y": 505,
+        "anomaly_pos": [
+            409,
+            134
+        ],
+        "anomaly_warp_dx": 195,
+        "active_eve_pos": [
+            738,
+            41
+        ],
+        "copy_target_data_pos": [
+            1036,
+            97
+        ],
+        "align_target_pos": [
+            998,
+            131
+        ],
+        "travel_title_pos": [
+            75,
+            152
+        ],
+        "lock_target_pos": [
+            1150,
+            128
+        ],
+        "warp_bar_pos": [
+            1128,
+            205
+        ],
+        "enemy_bar_pos": [
+            1091,
+            209
+        ],
+        "wreck_bar_pos": [
+            1172,
+            207
+        ],
+        "bar_item_pos": [
+            1092,
+            246
+        ],
+        "warp_dock_loot_pos": [
+            1056,
+            131
+        ],
+        "drone_in_bay_pos": [
+            104,
+            420
+        ],
+        "close_inventory_pos": [
+            888,
+            152
+        ],
+        "loot_all_pos": [
+            496,
+            570
+        ]
+    },
+    "combat": {
+        "optimal_distance": 40000,
+        "loot_distance": 2000,
+        "rare_ship_name": [
+            "Dread",
+            "Sentient",
+            "Shadow Serpentis"
+        ],
+        "anomaly_name": [
+            "Guristas Hideaway",
+            "Guristas Refuge",
+            "Drone Cluster"
+        ]
+    },
+    "ship": {
+        "max_speed": 400,
+        "speed_module_pos": [
+            762,
+            608
+        ],
+        "missile_module_pos": [
+            812,
+            607
+        ]
+    }
 }

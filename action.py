@@ -1,16 +1,15 @@
 import pyautogui
+import re
 
 from time import sleep
 import copy
 
-import log
+from log import log
 
 import helper
-from config import Config
-config = Config().get()
+from config import config
 
 # constants move to config
-travel_pos = config["main"]["travel_pos"]
 travel_title_pos = config["main"]["travel_title_pos"]
 
 active_eve_pos = config["main"]["active_eve_pos"]
@@ -23,6 +22,7 @@ warp_gate_pos = config["main"]["bar_item_pos"]
 drone_in_bay_pos = config["main"]["drone_in_bay_pos"]
 
 item_bar_end_y = config["main"]["item_bar_end_y"]
+anomaly_list_end_yc = config["main"]["anomaly_list_end_y"]
 
 
 # ship constant
@@ -33,6 +33,7 @@ speed_module_pos = config["ship"]["speed_module_pos"]
 
 # fight
 enemy_pos = config["main"]["bar_item_pos"]
+enemy_bar_pos = config["main"]["enemy_bar_pos"]
 
 
 def active_eve():
@@ -148,9 +149,9 @@ def init_gate_warp():
     click_pos(warp_gate_pos)
 
 
-def click_pos(click_pos, duration=0.5):
+def click_pos(click_pos, duration=0.5, pause=0):
     pyautogui.moveTo(*click_pos, duration=duration)
-    pyautogui.click()
+    pyautogui.click(pause=pause)
 
 
 def find_item_in_bar(bar_pos, ship_names):
@@ -184,3 +185,64 @@ def find_item_in_bar(bar_pos, ship_names):
         if item_pos[1] > item_bar_end_y:
             return None
 
+
+def copy_data_from_pos(pos):
+    click_pos(pos, pause=1)
+    pyautogui.hotkey('ctrl', 'c', pause=1)
+
+    return helper.get_data_from_clipboard()
+
+
+def parse_anomaly_data(data):
+    # NPJ-568	Cosmic Anomaly	Combat Site	Guristas Hideaway	100.0%	1.89 AU
+    anomaly_info = dict()
+
+    if data is None:
+        return anomaly_info
+
+    data_list = re.split(r'\t+', data)
+
+    if len(data_list) >= 5:
+        anomaly_info['id'] = data_list[0]
+        anomaly_info['type'] = data_list[2]
+        anomaly_info['name'] = data_list[3]
+        anomaly_info['distance'] = data_list[5]
+
+    return anomaly_info
+
+
+def find_anomaly_pos(anomaly_init_pos, anomaly_list):
+    anomaly_pos = copy.deepcopy(anomaly_init_pos)
+
+    prev_anomaly_id = ''
+    while True:
+        anomaly_info = parse_anomaly_data(copy_data_from_pos(anomaly_pos))
+
+        if len(anomaly_info) == 4:
+            if prev_anomaly_id == anomaly_info['id']:
+                return None
+            prev_anomaly_id = anomaly_info['id']
+
+            for anomaly_name in anomaly_list:
+                if anomaly_name == anomaly_info['name']:
+                    return anomaly_pos
+
+        anomaly_pos[1] = anomaly_pos[1] + 20
+        if (anomaly_pos[1] > anomaly_list_end_y) or len(anomaly_info) == 0:
+            return None
+
+
+def check_warp_end():
+    click_pos(drone_in_bay_pos)
+    drone_in_bay_info = parse_target_data(get_target_data())
+
+    click_pos(enemy_bar_pos)
+    while True:
+        click_pos(enemy_pos)
+        target_data = parse_target_data(get_target_data())
+
+        if target_data is not None and drone_in_bay_info['name'] != target_data['name']:
+            sleep(helper.get_random_delay(3, 8))
+            break
+
+        sleep(helper.get_random_delay(3, 8))

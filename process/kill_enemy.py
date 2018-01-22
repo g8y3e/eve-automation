@@ -1,10 +1,9 @@
-import log
+from log import log
 import action
 
 from process import Process
 
-from config import Config
-config = Config().get()
+from config import config
 
 lock_target_pos = config["main"]["lock_target_pos"]
 enemy_bar_pos = config["main"]["enemy_bar_pos"]
@@ -16,6 +15,7 @@ missile_module_pos = config["ship"]["missile_module_pos"]
 class KillEnemy(Process):
     def start(self):
         action.click_pos(enemy_bar_pos)
+        log.init_time()
         log.info('# start killing enemies')
 
         while True:
@@ -40,4 +40,5 @@ class KillEnemy(Process):
             log.info('killing target')
             action.destroy_target()
 
+        log.info('# elapsed time: ' + str(log.elapsed_time()) + ' sec')
         log.info('# end killing enemies')
