@@ -69,7 +69,9 @@ def parse_target_data(data):
 
     result = dict()
     result["name"] = infos[0]
-    result["distance"] = infos[1].lower().replace("distance: ", "")
+
+    if len(infos) > 1:
+        result["distance"] = infos[1].lower().replace("distance: ", "")
 
     if len(infos) > 2:
         result["bounty"] = infos[2].lower().replace("bounty: ", "")
@@ -156,7 +158,7 @@ def init_gate_warp():
     click_pos(warp_gate_pos)
 
 
-def click_pos(click_pos, duration=0.5, pause=0):
+def click_pos(click_pos, duration=0.5, pause=0.1):
     pyautogui.moveTo(*click_pos, duration=duration)
     pyautogui.click(pause=pause)
 
