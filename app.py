@@ -36,6 +36,8 @@ drone_in_bay_pos = config["main"]["drone_in_bay_pos"]
 close_inventory_pos = config["main"]["close_inventory_pos"]
 loot_all_pos = config["main"]["loot_all_pos"]
 
+copy_target_data_pos = config["main"]["copy_target_data_pos"]
+
 attack_module_pos = config["ship"]["attack_module_pos"]
 speed_module_pos = config["ship"]["speed_module_pos"]
 
@@ -61,6 +63,9 @@ config_label = {
     'Travel Title': ['main', 'travel_title_pos'],
     'Bar Item': ['main', 'bar_item_pos'],
     'Drone In Bay': ['main', 'drone_in_bay_pos'],
+    'Copy Target Data': ['main', 'copy_target_data_pos'],
+
+
     'Close Inventory': ['main', 'close_inventory_pos'],
     'Loot All': ['main', 'loot_all_pos'],
 
@@ -183,21 +188,22 @@ class EVEWindow(Gtk.Window):
         helper.create_pos_group(right_grid, 5, 'Bar Item', bar_item_pos, self.on_button_clicked, self._label_for_button)
         helper.create_pos_group(right_grid, 6, 'Drone In Bay', drone_in_bay_pos, self.on_button_clicked, self._label_for_button)
         helper.create_pos_group(right_grid, 7, 'Anomaly info Close', anomaly_info_close_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(right_grid, 8, 'Copy Target Data', copy_target_data_pos, self.on_button_clicked, self._label_for_button)
 
         inventory_label = Gtk.Label("\n\nInventory Buttons:\n")
-        right_grid.attach(inventory_label, 0, 8, 1, 1)
+        right_grid.attach(inventory_label, 0, 9, 1, 1)
 
-        helper.create_pos_group(right_grid, 9, 'Close Inventory', close_inventory_pos, self.on_button_clicked, self._label_for_button)
-        helper.create_pos_group(right_grid, 10, 'Loot All', loot_all_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(right_grid, 10, 'Close Inventory', close_inventory_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(right_grid, 11, 'Loot All', loot_all_pos, self.on_button_clicked, self._label_for_button)
 
         inventory_label = Gtk.Label("\n\nShip Buttons:\n")
-        right_grid.attach(inventory_label, 0, 11, 1, 1)
+        right_grid.attach(inventory_label, 0, 12, 1, 1)
 
-        helper.create_pos_group(right_grid, 12, 'Attack Module', attack_module_pos, self.on_button_clicked, self._label_for_button)
-        helper.create_pos_group(right_grid, 13, 'Speed Module', speed_module_pos, self.on_button_clicked, self._label_for_button)
-        helper.create_pos_group(right_grid, 14, 'Sub-Module 1', sub_modules_pos_1, self.on_button_clicked, self._label_for_button)
-        helper.create_pos_group(right_grid, 15, 'Sub-Module 2', sub_modules_pos_2, self.on_button_clicked, self._label_for_button)
-        helper.create_pos_group(right_grid, 16, 'Sub-Module 3', sub_modules_pos_3, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(right_grid, 13, 'Attack Module', attack_module_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(right_grid, 14, 'Speed Module', speed_module_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(right_grid, 15, 'Sub-Module 1', sub_modules_pos_1, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(right_grid, 16, 'Sub-Module 2', sub_modules_pos_2, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(right_grid, 17, 'Sub-Module 3', sub_modules_pos_3, self.on_button_clicked, self._label_for_button)
 
         self.mouseThread = MouseThread(self, self.x_pos_label, self.y_pos_label)
         self.mouseThread.start()
