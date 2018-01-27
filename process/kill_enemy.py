@@ -9,7 +9,7 @@ lock_target_pos = config["main"]["lock_target_pos"]
 enemy_bar_pos = config["main"]["enemy_bar_pos"]
 enemy_pos = config["main"]["bar_item_pos"]
 
-missile_module_pos = config["ship"]["missile_module_pos"]
+attack_module_pos = config["ship"]["attack_module_pos"]
 
 
 class KillEnemy(Process):
@@ -17,6 +17,9 @@ class KillEnemy(Process):
         action.click_pos(enemy_bar_pos)
         log.init_time()
         log.info('# start killing enemies')
+
+        # activate sub module
+        action.click_sub_modules()
 
         while True:
             action.click_pos(enemy_pos)
@@ -35,10 +38,13 @@ class KillEnemy(Process):
             log.info('lock target')
             action.click_pos(lock_target_pos)
 
-            action.click_pos(missile_module_pos)
+            action.click_pos(attack_module_pos)
 
             log.info('killing target')
             action.destroy_target()
+
+        # de-activate sub modules
+        action.click_sub_modules()
 
         log.info('# elapsed time: ' + str(log.elapsed_time()) + ' sec')
         log.info('# end killing enemies')

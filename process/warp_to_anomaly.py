@@ -6,8 +6,9 @@ from config import config
 import action
 
 anomaly_init_pos = config["main"]["anomaly_pos"]
-anomaly_warp_dx = config["main"]["anomaly_warp_dx"]
+anomaly_warp_x = config["main"]["anomaly_warp_x"][0]
 anomaly_name_list = config["combat"]["anomaly_name"]
+anomaly_info_close_pos = config["combat"]["anomaly_info_close_pos"]
 
 
 class WarpToAnomaly(Process):
@@ -21,11 +22,14 @@ class WarpToAnomaly(Process):
         log.init_time()
         log.info('# start warp to anomaly')
 
-        anomaly_pos = action.find_anomaly_pos(anomaly_init_pos, anomaly_name_list)
+        anomaly_pos, anomaly_name = action.find_anomaly_pos(anomaly_init_pos, anomaly_name_list)
         if anomaly_pos is not None:
             log.info('found anomaly - start warping')
-            anomaly_pos[0] += anomaly_warp_dx
+            anomaly_pos[0] = anomaly_warp_x
             action.click_pos(anomaly_pos)
+
+            if 'drone' in anomaly_name.lower():
+                action.click_pos(anomaly_info_close_pos)
 
             action.check_warp_end()
         else:

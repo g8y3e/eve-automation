@@ -24,6 +24,26 @@ align_target_pos = config["main"]["align_target_pos"]
 lock_target_pos = config["main"]["lock_target_pos"]
 anomaly_pos = config["main"]["anomaly_pos"]
 
+item_bar_end_y = config["main"]["item_bar_end_y"]
+
+anomaly_list_end_y = config["main"]["anomaly_list_end_y"]
+anomaly_warp_x = config["main"]["anomaly_warp_x"]
+travel_title_pos = config["main"]["travel_title_pos"]
+
+bar_item_pos = config["main"]["bar_item_pos"]
+drone_in_bay_pos = config["main"]["drone_in_bay_pos"]
+
+close_inventory_pos = config["main"]["close_inventory_pos"]
+loot_all_pos = config["main"]["loot_all_pos"]
+
+attack_module_pos = config["ship"]["attack_module_pos"]
+speed_module_pos = config["ship"]["speed_module_pos"]
+
+sub_modules_pos_1 = config["ship"]["sub_modules_pos_1"]
+sub_modules_pos_2 = config["ship"]["sub_modules_pos_2"]
+sub_modules_pos_3 = config["ship"]["sub_modules_pos_3"]
+
+anomaly_info_close_pos = config["combat"]["anomaly_info_close_pos"]
 
 active_eve_pos = config["main"]["active_eve_pos"]
 
@@ -35,6 +55,22 @@ config_label = {
     'Align': ['main', 'align_target_pos'],
     'Lock Target': ['main', 'lock_target_pos'],
     'Anomaly': ['main', 'anomaly_pos'],
+    'Item Bar End Y': ['main', 'item_bar_end_y'],
+    'Anomaly End Y': ['main', 'anomaly_list_end_y'],
+    'Anomaly Warp X': ['main', 'anomaly_warp_x'],
+    'Travel Title': ['main', 'travel_title_pos'],
+    'Bar Item': ['main', 'bar_item_pos'],
+    'Drone In Bay': ['main', 'drone_in_bay_pos'],
+    'Close Inventory': ['main', 'close_inventory_pos'],
+    'Loot All': ['main', 'loot_all_pos'],
+
+    'Attack Module': ['ship', 'attack_module_pos'],
+    'Speed Module': ['ship', 'speed_module_pos'],
+    'Sub-Module 1': ['ship', 'sub_modules_pos_1'],
+    'Sub-Module 2': ['ship', 'sub_modules_pos_2'],
+    'Sub-Module 3': ['ship', 'sub_modules_pos_3'],
+
+    'Anomaly info Close': ['combat', 'anomaly_info_close_pos'],
 
     'Eve Window': ['main', 'active_eve_pos'],
 }
@@ -95,55 +131,73 @@ class EVEWindow(Gtk.Window):
         # handler when any key is pressed
         self.connect("key-press-event", self.on_key_press_event)
 
-        hbox = Gtk.Box(spacing=10)
-        hbox.set_homogeneous(False)
+        self.x_pos_label = Gtk.Label("Item bar positions:\n")
+        self.y_pos_label = Gtk.Label("Item bar positions:\n")
 
-        vbox_left = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
-        vbox_left.set_homogeneous(False)
+        main_grid = Gtk.Grid()
+        self.add(main_grid)
 
-        vbox_right = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
-        vbox_right.set_homogeneous(False)
+        left_grid = Gtk.Grid()
+        main_grid.attach(left_grid, 0, 0, 1, 1)
 
-        hbox.pack_start(vbox_left, True, True, 0)
-        hbox.pack_start(vbox_right, True, True, 0)
-
-        self.x_pos_label = Gtk.Label("X: 0;")
-        vbox_left.pack_start(self.x_pos_label, True, True, 0)
-
-        self.y_pos_label = Gtk.Label("Y: 0;")
-        vbox_right.pack_start(self.y_pos_label, True, True, 0)
-
-        #self.add(hbox)
-
-        grid = Gtk.Grid()
-        self.add(grid)
+        right_grid = Gtk.Grid()
+        main_grid.attach(right_grid, 1, 0, 1, 1)
 
         bar_pos_label = Gtk.Label("Item bar positions:\n")
-        grid.add(bar_pos_label)
+        left_grid.add(bar_pos_label)
 
-        helper.create_pos_group(grid, 1, 'Warp Bar', warp_bar_pos, self.on_button_clicked, self._label_for_button)
-        helper.create_pos_group(grid, 2, 'Enemy Bar', enemy_bar_pos, self.on_button_clicked, self._label_for_button)
-        helper.create_pos_group(grid, 3, 'Wreck Bar', wreck_bar_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(left_grid, 1, 'Warp Bar', warp_bar_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(left_grid, 2, 'Enemy Bar', enemy_bar_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(left_grid, 3, 'Wreck Bar', wreck_bar_pos, self.on_button_clicked, self._label_for_button)
 
         navigation_label = Gtk.Label("\n\nNavigation buttons:\n")
-        grid.attach(navigation_label, 0, 4, 1, 1)
+        left_grid.attach(navigation_label, 0, 4, 1, 1)
 
-        helper.create_pos_group(grid, 5, 'Warp Dock Loot', warp_bar_pos, self.on_button_clicked, self._label_for_button)
-        helper.create_pos_group(grid, 6, 'Align', align_target_pos, self.on_button_clicked, self._label_for_button)
-        helper.create_pos_group(grid, 7, 'Lock Target', lock_target_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(left_grid, 5, 'Warp Dock Loot', warp_bar_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(left_grid, 6, 'Align', align_target_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(left_grid, 7, 'Lock Target', lock_target_pos, self.on_button_clicked, self._label_for_button)
 
         navigation_label = Gtk.Label("\n\nGUI buttons:\n")
-        grid.attach(navigation_label, 0, 8, 1, 1)
+        left_grid.attach(navigation_label, 0, 8, 1, 1)
 
-        helper.create_pos_group(grid, 9, 'Anomaly', warp_bar_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(left_grid, 9, 'Anomaly', warp_bar_pos, self.on_button_clicked, self._label_for_button)
 
         init_label = Gtk.Label("\n\nInit:\n")
-        grid.attach(init_label, 0, 10, 1, 1)
-        helper.create_pos_group(grid, 11, 'Eve Window', active_eve_pos, self.on_button_clicked, self._label_for_button)
+        left_grid.attach(init_label, 0, 10, 1, 1)
+        helper.create_pos_group(left_grid, 11, 'Eve Window', active_eve_pos, self.on_button_clicked, self._label_for_button)
 
-        empty_label = Gtk.Label("\n\n\n")
-        grid.attach(empty_label, 0, 12, 1, 1)
-        helper.create_pos_group(grid, 13, 'Start Game', active_eve_pos, self.on_button_start, self._label_for_button)
+        empty_label = Gtk.Label("\n\n\n\n\n\n\n")
+        start_game = Gtk.Button(label='Start Game')
+        start_game.connect("clicked", self.on_button_start)
+
+        left_grid.attach(empty_label, 0, 12, 1, 1)
+        left_grid.attach(start_game, 0, 13, 1, 1)
+
+        bar_pos_label = Gtk.Label("GUI Positions:\n")
+        right_grid.add(bar_pos_label)
+
+        helper.create_pos_group(right_grid, 1, 'Item Bar End Y', item_bar_end_y, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(right_grid, 2, 'Anomaly End Y', anomaly_list_end_y, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(right_grid, 3, 'Anomaly Warp X', anomaly_warp_x, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(right_grid, 4, 'Travel Title', travel_title_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(right_grid, 5, 'Bar Item', bar_item_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(right_grid, 6, 'Drone In Bay', drone_in_bay_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(right_grid, 7, 'Anomaly info Close', anomaly_info_close_pos, self.on_button_clicked, self._label_for_button)
+
+        inventory_label = Gtk.Label("\n\nInventory Buttons:\n")
+        right_grid.attach(inventory_label, 0, 8, 1, 1)
+
+        helper.create_pos_group(right_grid, 9, 'Close Inventory', close_inventory_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(right_grid, 10, 'Loot All', loot_all_pos, self.on_button_clicked, self._label_for_button)
+
+        inventory_label = Gtk.Label("\n\nShip Buttons:\n")
+        right_grid.attach(inventory_label, 0, 11, 1, 1)
+
+        helper.create_pos_group(right_grid, 12, 'Attack Module', attack_module_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(right_grid, 13, 'Speed Module', speed_module_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(right_grid, 14, 'Sub-Module 1', sub_modules_pos_1, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(right_grid, 15, 'Sub-Module 2', sub_modules_pos_2, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(right_grid, 16, 'Sub-Module 3', sub_modules_pos_3, self.on_button_clicked, self._label_for_button)
 
         self.mouseThread = MouseThread(self, self.x_pos_label, self.y_pos_label)
         self.mouseThread.start()

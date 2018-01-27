@@ -21,8 +21,8 @@ warp_gate_pos = config["main"]["bar_item_pos"]
 
 drone_in_bay_pos = config["main"]["drone_in_bay_pos"]
 
-item_bar_end_y = config["main"]["item_bar_end_y"]
-anomaly_list_end_yc = config["main"]["anomaly_list_end_y"]
+item_bar_end_y = config["main"]["item_bar_end_y"][1]
+anomaly_list_end_y = config["main"]["anomaly_list_end_y"][1]
 
 
 # ship constant
@@ -30,6 +30,10 @@ optimal_distance = config["combat"]["optimal_distance"]  # km
 
 max_speed = config["ship"]["max_speed"]  # m/s
 speed_module_pos = config["ship"]["speed_module_pos"]
+
+sub_modules_pos_1 = config["ship"]["sub_modules_pos_1"]
+sub_modules_pos_2 = config["ship"]["sub_modules_pos_2"]
+sub_modules_pos_3 = config["ship"]["sub_modules_pos_3"]
 
 # fight
 enemy_pos = config["main"]["bar_item_pos"]
@@ -225,7 +229,7 @@ def find_anomaly_pos(anomaly_init_pos, anomaly_list):
 
             for anomaly_name in anomaly_list:
                 if anomaly_name == anomaly_info['name']:
-                    return anomaly_pos
+                    return anomaly_pos, anomaly_info['name']
 
         anomaly_pos[1] = anomaly_pos[1] + 20
         if (anomaly_pos[1] > anomaly_list_end_y) or len(anomaly_info) == 0:
@@ -246,3 +250,9 @@ def check_warp_end():
             break
 
         sleep(helper.get_random_delay(3, 8))
+
+
+def click_sub_modules():
+    click_pos(sub_modules_pos_1)
+    click_pos(sub_modules_pos_2)
+    click_pos(sub_modules_pos_3)

@@ -29,7 +29,7 @@ def get_random_delay(min, max):
 
 
 def convert_pos_to_str(pos):
-    return '   x: ' + str(pos[0]) + '; y: ' + str(pos[1])
+    return '   x: ' + str(pos[0]) + '; y: ' + str(pos[1]) + ';  '
 
 
 def create_pos_group(layout, index, button_name, current_pos, callback, attach_label):

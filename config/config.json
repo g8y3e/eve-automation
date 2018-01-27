@@ -7,16 +7,25 @@
         "title": "EVE automation"
     },
     "main": {
-        "item_bar_end_y": 740,
-        "anomaly_list_end_y": 505,
-        "anomaly_pos": [
-            409,
-            134
+        "item_bar_end_y": [
+            1066,
+            744
         ],
-        "anomaly_warp_dx": 195,
+        "anomaly_list_end_y": [
+            507,
+            519
+        ],
+        "anomaly_pos": [
+            510,
+            151
+        ],
+        "anomaly_warp_x": [
+            698,
+            149
+        ],
         "active_eve_pos": [
-            738,
-            41
+            758,
+            32
         ],
         "copy_target_data_pos": [
             1036,
@@ -27,43 +36,43 @@
             131
         ],
         "travel_title_pos": [
-            75,
-            152
+            93,
+            155
         ],
         "lock_target_pos": [
-            1150,
-            128
+            1115,
+            139
         ],
         "warp_bar_pos": [
-            1128,
-            205
+            1138,
+            206
         ],
         "enemy_bar_pos": [
-            1091,
-            209
-        ],
-        "wreck_bar_pos": [
-            1172,
+            1092,
             207
         ],
+        "wreck_bar_pos": [
+            1175,
+            206
+        ],
         "bar_item_pos": [
-            1092,
-            246
+            1024,
+            247
         ],
         "warp_dock_loot_pos": [
             1056,
             131
         ],
         "drone_in_bay_pos": [
-            104,
-            420
+            154,
+            326
         ],
         "close_inventory_pos": [
             888,
             152
         ],
         "loot_all_pos": [
-            496,
+            493,
             570
         ]
     },
@@ -79,17 +88,33 @@
             "Guristas Hideaway",
             "Guristas Refuge",
             "Drone Cluster"
+        ],
+        "anomaly_info_close_pos": [
+            699,
+            579
         ]
     },
     "ship": {
         "max_speed": 400,
         "speed_module_pos": [
-            762,
-            608
+            760,
+            599
         ],
-        "missile_module_pos": [
+        "attack_module_pos": [
+            815,
+            611
+        ],
+        "sub_modules_pos_1": [
+            785,
+            654
+        ],
+        "sub_modules_pos_2": [
+            763,
+            697
+        ],
+        "sub_modules_pos_3": [
             812,
-            607
+            695
         ]
     }
 }
