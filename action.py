@@ -52,7 +52,10 @@ def get_target_data():
     pyautogui.moveRel(25, 10, duration=0.5)
     pyautogui.click()
 
-    return helper.get_data_from_clipboard()
+    clipboard_data = helper.get_data_from_clipboard()
+    print('Current clipboard data: ' + clipboard_data)
+
+    return clipboard_data
 
 
 def parse_target_data(data):
