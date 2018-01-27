@@ -50,7 +50,7 @@ def get_target_data():
     pyautogui.click(button='right')
 
     pyautogui.moveRel(25, 10, duration=0.5)
-    pyautogui.click()
+    pyautogui.click(interval=0.2)
 
     clipboard_data = helper.get_data_from_clipboard()
     print('Current clipboard data: ' + clipboard_data)
