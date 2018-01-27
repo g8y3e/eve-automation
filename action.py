@@ -192,7 +192,7 @@ def find_item_in_bar(bar_pos, ship_names):
 
 def copy_data_from_pos(pos):
     click_pos(pos, pause=1)
-    pyautogui.hotkey('ctrl', 'c', pause=1)
+    pyautogui.hotkey('ctrl', 'C', interval=0.2, pause=1)
 
     return helper.get_data_from_clipboard()
 
