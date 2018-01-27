@@ -220,9 +220,10 @@ def find_anomaly_pos(anomaly_init_pos, anomaly_list):
 
     prev_anomaly_id = ''
     while True:
-        anomaly_info = parse_anomaly_data(copy_data_from_pos(anomaly_pos))
+        anomaly_data = copy_data_from_pos(anomaly_pos)
+        anomaly_info = parse_anomaly_data(anomaly_data)
 
-        log.info('Current anomaly name: ' + anomaly_info['name'])
+        log.info('Current anomaly data: ' + anomaly_data)
 
         if len(anomaly_info) == 4:
             if prev_anomaly_id == anomaly_info['id']:
