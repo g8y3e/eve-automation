@@ -53,7 +53,7 @@ def get_target_data():
     pyautogui.click(interval=0.2)
 
     clipboard_data = helper.get_data_from_clipboard()
-    print('Current clipboard data: ' + clipboard_data)
+    print('Current clipboard data: ' + clipboard_data.replace("▒", ""))
 
     return clipboard_data
 
@@ -89,7 +89,7 @@ def parse_distance(distance):
         metric_len = 2
 
     info["number"] = int(distance[:-metric_len].replace(",", ""))
-    info["number"] = int(distance[:-metric_len].replace("▒", ""))
+    info["number"] = int(distance[:-metric_len].replace("", ""))
 
     return info
 
