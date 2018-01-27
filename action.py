@@ -224,7 +224,7 @@ def find_anomaly_pos(anomaly_init_pos, anomaly_list):
 
         if len(anomaly_info) == 4:
             if prev_anomaly_id == anomaly_info['id']:
-                return None
+                return None, None
             prev_anomaly_id = anomaly_info['id']
 
             for anomaly_name in anomaly_list:
@@ -233,7 +233,7 @@ def find_anomaly_pos(anomaly_init_pos, anomaly_list):
 
         anomaly_pos[1] = anomaly_pos[1] + 20
         if (anomaly_pos[1] > anomaly_list_end_y) or len(anomaly_info) == 0:
-            return None
+            return None, None
 
 
 def check_warp_end():
