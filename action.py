@@ -88,8 +88,8 @@ def parse_distance(distance):
         info["metric"] = "m"
         metric_len = 2
 
-    info["number"] = int(distance[:-metric_len].replace(",", ""))
-    info["number"] = int(distance[:-metric_len].replace("", ""))
+    info["number"] = int(distance[:-metric_len].replace(',', ''))
+    info["number"] = int(distance[:-metric_len].replace(chr(160), ''))
 
     return info
 

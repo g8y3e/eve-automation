@@ -19,13 +19,13 @@ def get_data_from_clipboard():
 
     clipboard_data = clipboard.wait_for_text()
 
-    if clipboard_data is not None and len(clipboard_data) > 0:
-        print('\n')
-
-        for c in clipboard_data:
-            print(str(ord(c)) + ' - ' + c)
-
-        print('\n')
+    #if clipboard_data is not None and len(clipboard_data) > 0:
+    #    print('\n')
+#
+    #    for c in clipboard_data:
+    #        print(str(ord(c)) + ' - ' + c)
+#
+    #    print('\n')
     return clipboard_data
 
 
