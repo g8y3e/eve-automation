@@ -172,11 +172,15 @@ class EVEWindow(Gtk.Window):
         helper.create_pos_group(left_grid, 11, 'Eve Window', active_eve_pos, self.on_button_clicked, self._label_for_button)
 
         empty_label = Gtk.Label("\n\n\n\n\n\n\n")
-        start_game = Gtk.Button(label='Start Game')
-        start_game.connect("clicked", self.on_button_start)
+        run_anomaly_game = Gtk.Button(label='Run Anomaly Game')
+        run_anomaly_game.connect("clicked", self.on_button_run_anomaly)
 
         left_grid.attach(empty_label, 0, 12, 1, 1)
-        left_grid.attach(start_game, 0, 13, 1, 1)
+        left_grid.attach(run_anomaly_game, 0, 13, 1, 1)
+
+        run_agent_game = Gtk.Button(label='Run Agent Game')
+        run_agent_game.connect("clicked", self.on_button_run_agent)
+        left_grid.attach(run_agent_game, 0, 14, 1, 1)
 
         bar_pos_label = Gtk.Label("GUI Positions:\n")
         right_grid.add(bar_pos_label)
@@ -208,7 +212,7 @@ class EVEWindow(Gtk.Window):
         self.mouseThread = MouseThread(self, self.x_pos_label, self.y_pos_label)
         self.mouseThread.start()
 
-    def on_button_start(self, widget):
+    def on_button_run_anomaly(self, widget):
         action.active_eve()
 
         warp = WarpToAnomaly()
@@ -238,6 +242,9 @@ class EVEWindow(Gtk.Window):
                     loot_wreck.start()
 
                 warp.start()
+
+    def on_button_run_agent(self, widget):
+        pass
 
     def on_button_clicked(self, widget):
         print("Hello World" + widget.get_label())

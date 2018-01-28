@@ -33,7 +33,7 @@ class KillEnemy(Process):
                 break
 
             if target_distance["metric"] == "km" and target_distance["number"] * 1000 > action.optimal_distance:
-                action.fly_to_target(target_distance["number"])
+                action.fly_to_target(target_distance["number"] * 1000)
 
             log.info('lock target')
             action.click_pos(lock_target_pos)
