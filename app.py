@@ -230,11 +230,12 @@ class EVEWindow(Gtk.Window):
             warp = WarpToAnomaly()
             warp.start()
             while not warp.is_anomaly_end():
-                kill = KillEnemy()
-                kill.start()
+                if not warp.is_anomaly_closed():
+                    kill = KillEnemy()
+                    kill.start()
 
-                loot_wreck = LootWreck()
-                loot_wreck.start()
+                    loot_wreck = LootWreck()
+                    loot_wreck.start()
 
                 warp.start()
 

@@ -106,6 +106,9 @@
             886
         ],
         "max_speed": 400,
+        "timeout": {
+          "warp_to_anomaly": 240
+        },
         "speed_module_pos": [
             761,
             840

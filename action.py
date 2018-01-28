@@ -35,6 +35,8 @@ sub_modules_pos_1 = config["ship"]["sub_modules_pos_1"]
 sub_modules_pos_2 = config["ship"]["sub_modules_pos_2"]
 sub_modules_pos_3 = config["ship"]["sub_modules_pos_3"]
 
+warp_to_anomaly_timeout = config["ship"]["timeout"]["warp_to_anomaly"]
+
 # fight
 enemy_pos = config["main"]["bar_item_pos"]
 enemy_bar_pos = config["main"]["enemy_bar_pos"]
@@ -256,6 +258,8 @@ def check_warp_end():
     click_pos(drone_in_bay_pos)
     drone_in_bay_info = parse_target_data(get_target_data())
 
+    log.init_time()
+
     click_pos(enemy_bar_pos)
     while True:
         click_pos(enemy_pos)
@@ -266,6 +270,11 @@ def check_warp_end():
             break
 
         sleep(helper.get_random_delay(3, 8))
+
+        if log.elapsed_time() > warp_to_anomaly_timeout:
+            return False
+
+    return True
 
 
 def click_sub_modules():

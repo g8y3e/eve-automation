@@ -14,13 +14,19 @@ anomaly_info_close_pos = config["combat"]["anomaly_info_close_pos"]
 class WarpToAnomaly(Process):
     def __init__(self):
         self._is_anomaly_end = False
+        self._is_anomaly_closed = False
 
     def is_anomaly_end(self):
         return self._is_anomaly_end
 
+    def is_anomaly_closed(self):
+        return self._is_anomaly_closed
+
     def start(self):
         log.init_time()
         log.info('# start warp to anomaly')
+
+        self._is_anomaly_closed = False
 
         anomaly_pos, anomaly_name = action.find_anomaly_pos(anomaly_init_pos, anomaly_name_list)
         if anomaly_pos is not None:
@@ -31,7 +37,10 @@ class WarpToAnomaly(Process):
             if 'drone' in anomaly_name.lower():
                 action.click_pos(anomaly_info_close_pos)
 
-            action.check_warp_end()
+            warp_result = action.check_warp_end()
+
+            if not warp_result:
+                self._is_anomaly_closed = True
         else:
             self._is_anomaly_end = True
 
