@@ -1,122 +1,126 @@
 {
-    "window": {
-        "size": [
-            200,
-            100
-        ],
-        "title": "EVE automation"
-    },
     "main": {
-        "item_bar_end_y": [
-            1066,
-            744
-        ],
-        "anomaly_list_end_y": [
-            507,
-            519
-        ],
-        "anomaly_pos": [
-            510,
-            151
-        ],
-        "anomaly_warp_x": [
-            698,
-            149
-        ],
-        "active_eve_pos": [
-            758,
-            32
-        ],
-        "copy_target_data_pos": [
-            1036,
-            97
+        "bar_item_pos": [
+            1026,
+            231
         ],
         "align_target_pos": [
-            998,
-            131
-        ],
-        "travel_title_pos": [
-            93,
-            155
-        ],
-        "lock_target_pos": [
-            1115,
-            139
-        ],
-        "warp_bar_pos": [
-            1138,
-            206
-        ],
-        "enemy_bar_pos": [
-            1092,
-            207
-        ],
-        "wreck_bar_pos": [
-            1175,
-            206
-        ],
-        "bar_item_pos": [
-            1024,
-            247
+            945,
+            105
         ],
         "warp_dock_loot_pos": [
-            1056,
-            131
+            1015,
+            106
+        ],
+        "anomaly_pos": [
+            570,
+            124
+        ],
+        "anomaly_warp_x": [
+            742,
+            125
+        ],
+        "anomaly_list_end_y": [
+            506,
+            734
         ],
         "drone_in_bay_pos": [
-            154,
-            326
+            197,
+            538
+        ],
+        "active_eve_pos": [
+            655,
+            9
+        ],
+        "lock_target_pos": [
+            1078,
+            112
         ],
         "close_inventory_pos": [
-            888,
-            152
+            798,
+            276
         ],
         "loot_all_pos": [
-            493,
-            570
+            409,
+            699
+        ],
+        "copy_target_data_pos": [
+            984,
+            77
+        ],
+        "travel_title_pos": [
+            92,
+            131
+        ],
+        "warp_bar_pos": [
+            1039,
+            186
+        ],
+        "wreck_bar_pos": [
+            1080,
+            184
+        ],
+        "enemy_bar_pos": [
+            994,
+            187
+        ],
+        "item_bar_end_y": [
+            1093,
+            975
         ]
     },
     "combat": {
-        "optimal_distance": 40000,
+        "anomaly_info_close_pos": [
+            797,
+            796
+        ],
+        "optimal_distance": 25000,
         "loot_distance": 2000,
         "rare_ship_name": [
             "Dread",
             "Sentient",
-            "Shadow Serpentis"
+            "Shadow Serpentis",
+            "Coreli",
+            "Splinter"
         ],
         "anomaly_name": [
             "Guristas Hideaway",
             "Guristas Refuge",
             "Drone Cluster",
+            "Drone Assembly",
             "Serpentis Refuge",
-            "Serpentis Hideaway"
-        ],
-        "anomaly_info_close_pos": [
-            699,
-            579
+            "Serpentis Hideaway",
+            "Serpentis Burrow"
+        ]
+    },
+    "window": {
+        "title": "EVE automation",
+        "size": [
+            200,
+            100
         ]
     },
     "ship": {
+        "sub_modules_pos_1": [
+            791,
+            886
+        ],
         "max_speed": 400,
         "speed_module_pos": [
-            760,
-            599
-        ],
-        "attack_module_pos": [
-            815,
-            611
-        ],
-        "sub_modules_pos_1": [
-            785,
-            654
+            761,
+            840
         ],
         "sub_modules_pos_2": [
-            763,
-            697
+            808,
+            924
+        ],
+        "attack_module_pos": [
+            918,
+            931
         ],
         "sub_modules_pos_3": [
-            812,
-            695
+            759,
+            926
         ]
     }
 }

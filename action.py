@@ -59,7 +59,7 @@ def get_target_data():
 
 
 def parse_target_data(data):
-    if data is None:
+    if data is None or len(data) == 0:
         return {
             "name": "empty",
             "distance": "0 m"
@@ -87,9 +87,12 @@ def parse_distance(distance):
     elif " m" in distance:
         info["metric"] = "m"
         metric_len = 2
-
-    info["number"] = int(distance[:-metric_len].replace(',', ''))
-    info["number"] = int(distance[:-metric_len].replace(chr(160), ''))
+    
+    disntace = distance[:-metric_len].replace(str(chr(160)), "")
+    disntace = disntace.replace(",", "")
+    info["number"] = int(disntace)
+    
+    log.info('Distance info: ' + str(info["number"]))
 
     return info
 
@@ -108,6 +111,9 @@ def fly_to_target(distance, opt_distance=optimal_distance, speed=max_speed):
             sleep(wait_time)
 
         target_info = parse_target_data(get_target_data())
+		
+        log.info('Current target info: ' + str(target_info)) 
+		
         target_distance = parse_distance(target_info["distance"])
 
         if distance <= opt_distance:
@@ -126,6 +132,7 @@ def destroy_target():
         sleep(3)
 
         target_info = parse_target_data(get_target_data())
+        log.info('Target info: ' + str(target_info))
         if target_info["name"] == "empty":
             break
 
@@ -190,7 +197,7 @@ def find_item_in_bar(bar_pos, ship_names):
             if item in target_info["name"]:
                 return item_pos
 
-        item_pos[1] = item_pos[1] + 20
+        item_pos[1] = item_pos[1] + 18
 
         if item_pos[1] > item_bar_end_y:
             return None
@@ -265,3 +272,4 @@ def click_sub_modules():
     click_pos(sub_modules_pos_1)
     click_pos(sub_modules_pos_2)
     click_pos(sub_modules_pos_3)
+    

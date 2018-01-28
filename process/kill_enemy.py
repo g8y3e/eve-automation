@@ -32,7 +32,7 @@ class KillEnemy(Process):
             if target_info["name"] == "empty":
                 break
 
-            if target_distance["metric"] == "km" and target_distance["number"] > action.optimal_distance:
+            if target_distance["metric"] == "km" and target_distance["number"] * 1000 > action.optimal_distance:
                 action.fly_to_target(target_distance["number"])
 
             log.info('lock target')
