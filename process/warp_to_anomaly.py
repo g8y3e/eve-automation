@@ -10,6 +10,8 @@ anomaly_warp_x = config["main"]["anomaly_warp_x"][0]
 anomaly_name_list = config["combat"]["anomaly_name"]
 anomaly_info_close_pos = config["combat"]["anomaly_info_close_pos"]
 
+enemy_bar_pos = config["main"]["enemy_bar_pos"]
+
 
 class WarpToAnomaly(Process):
     def __init__(self):
@@ -37,7 +39,7 @@ class WarpToAnomaly(Process):
             if 'drone' in anomaly_name.lower():
                 action.click_pos(anomaly_info_close_pos)
 
-            warp_result = action.check_warp_end()
+            warp_result = action.check_warp_end(enemy_bar_pos)
 
             if not warp_result:
                 self._is_anomaly_closed = True

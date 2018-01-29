@@ -15,10 +15,16 @@ close_inventory_pos = config["main"]["close_inventory_pos"]
 
 
 class LootWreck(Process):
+    def __init__(self):
+        self._rare_ship_name = rare_ship_name
+
+    def set_rare_ship_names(self, ships):
+        self._rare_ship_name = ships
+
     def start(self):
         log.init_time()
         log.info('# start looting wreck')
-        item_pos = action.find_item_in_bar(wreck_bar_pos, rare_ship_name)
+        item_pos = action.find_item_in_bar(wreck_bar_pos, self._rare_ship_name)
 
         if item_pos is not None:
             # move to wreck

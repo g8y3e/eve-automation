@@ -18,7 +18,7 @@ copy_target_data_pos = config["main"]["copy_target_data_pos"]
 align_target_pos = config["main"]["align_target_pos"]
 
 warp_bar_pos = config["main"]["warp_bar_pos"]
-warp_gate_pos = config["main"]["bar_item_pos"]
+gate_bar_pos = config["main"]["gate_bar_pos"]
 
 drone_in_bay_pos = config["main"]["drone_in_bay_pos"]
 
@@ -45,7 +45,7 @@ sub_modules_pos_3 = config["ship"]["sub_modules_pos_3"]
 warp_to_anomaly_timeout = config["ship"]["timeout"]["warp_to_anomaly"]
 
 # fight
-enemy_pos = config["main"]["bar_item_pos"]
+bar_item_pos = config["main"]["bar_item_pos"]
 enemy_bar_pos = config["main"]["enemy_bar_pos"]
 
 
@@ -135,14 +135,22 @@ def fly_to_target(distance, opt_distance=optimal_distance, speed=max_speed):
     pyautogui.click()
 
 
-def destroy_target():
+def destroy_target(with_periscope_drones=False, periscope_timeout=0):
+    delta_time = 0
+    sleep_time = 3
+
     while True:
-        sleep(3)
+        sleep(sleep_time)
+        delta_time += sleep_time
 
         target_info = parse_target_data(get_target_data())
         log.info('Target info: ' + str(target_info))
         if target_info["name"] == "empty":
             break
+
+        if with_periscope_drones and delta_time >= periscope_timeout:
+            delta_time = 0
+            pyautogui.press('r', pause=40)
 
         # press F
         pyautogui.press('l', pause=3)
@@ -171,7 +179,7 @@ def get_jump_title_data():
 
 def init_gate_warp():
     click_pos(warp_bar_pos)
-    click_pos(warp_gate_pos)
+    click_pos(bar_item_pos)
 
 
 def click_pos(click_target_pos, duration=0.5, pause=0.1):
@@ -179,10 +187,10 @@ def click_pos(click_target_pos, duration=0.5, pause=0.1):
     pyautogui.click(pause=pause)
 
 
-def find_item_in_bar(bar_pos, ship_names):
+def find_item_in_bar(bar_pos, item_names, start_item_pos=bar_item_pos):
     click_pos(bar_pos)
 
-    item_pos = copy.deepcopy(enemy_pos)
+    item_pos = copy.deepcopy(start_item_pos)
     prev_name = ""
     while True:
         click_pos(item_pos)
@@ -201,7 +209,7 @@ def find_item_in_bar(bar_pos, ship_names):
 
         prev_name = target_info["name"]
 
-        for item in ship_names:
+        for item in item_names:
             if item in target_info["name"]:
                 return item_pos
 
@@ -258,15 +266,15 @@ def find_anomaly_pos(anomaly_init_pos, anomaly_list):
             return None, None
 
 
-def check_warp_end():
+def check_warp_end(bar_pos):
     click_pos(drone_in_bay_pos)
     drone_in_bay_info = parse_target_data(get_target_data())
 
     log.init_time()
 
-    click_pos(enemy_bar_pos)
+    click_pos(bar_pos)
     while True:
-        click_pos(enemy_pos)
+        click_pos(bar_item_pos)
         target_data = parse_target_data(get_target_data())
 
         if target_data is not None and drone_in_bay_info['name'] != target_data['name']:
@@ -371,7 +379,6 @@ def set_expedition_destination():
 
     expedition_pos = copy.deepcopy(expeditions_item_pos)
 
-    prev_anomaly_id = ''
     while True:
         expedition_data = copy_data_from_pos(expedition_pos)
 
@@ -390,8 +397,20 @@ def set_expedition_destination():
         if (expedition_pos[1] > expeditions_list_end_y) or len(expedition_info) == 0:
             return None, None
 
+
 def warp_to_ded_complex(expedition_pos):
-    pass
+    click_pos(journal_button_pos)
+    click_pos(journal_expeditions_pos, pause=0.6)
+
+    pyautogui.moveTo(*expedition_pos, duration=0.5)
+    pyautogui.click(button='right')
+
+    pyautogui.moveRel(25, 10, duration=0.2)
+    pyautogui.click()
+
+    check_warp_end(gate_bar_pos)
+
+
 
 #exp_data = '7 hours, 40 minutes and 33 seconds	2018.01.29 01:54:00	Gulmorogod	21	Serpentis Narcotic Warehouses'
 #res = parse_expedition_data(exp_data)

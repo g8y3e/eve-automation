@@ -91,6 +91,12 @@
         "expeditions_list_end": [
             463,
             545
+        ],
+        "gate_bar_pos":[
+          0, 0
+        ],
+        "struct_bar_pos": [
+          0,0
         ]
     },
     "combat": {

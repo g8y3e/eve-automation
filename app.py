@@ -8,6 +8,7 @@ from gi.repository import Gtk, Gdk
 
 import action
 import helper
+
 from config import config
 from config import config_save
 
@@ -44,6 +45,9 @@ drone_in_bay_pos = config["main"]["drone_in_bay_pos"]
 
 close_inventory_pos = config["main"]["close_inventory_pos"]
 loot_all_pos = config["main"]["loot_all_pos"]
+
+gate_bar_pos = config["main"]["gate_bar_pos"]
+struct_bar_pos = config["main"]["struct_bar_pos"]
 
 copy_target_data_pos = config["main"]["copy_target_data_pos"]
 
@@ -93,6 +97,9 @@ config_label = {
     'Expedition List End Y': ['main', 'expeditions_list_end'],
     'End Travel Title': ['main', 'end_travel_title_pos'],
 
+    'Gate Bar': ['main', 'gate_bar_pos'],
+    'Struct Bar': ['main', 'struct_bar_pos'],
+
     'Eve Window': ['main', 'active_eve_pos'],
 }
 
@@ -141,10 +148,9 @@ class EVEWindow(Gtk.Window):
         self.set_border_width(10)
 
         window_size = config["window"]["size"]
-        self.set_default_size(*window_size)
+        #self.set_default_size(*window_size)
 
         screen_size = helper.get_screen_size()
-        self.move(screen_size[0] / 2 - window_size[0] / 2, screen_size[1] / 2 - window_size[1] / 2)
 
         self.connect("destroy", self.quit)
 
@@ -246,8 +252,17 @@ class EVEWindow(Gtk.Window):
         helper.create_pos_group(third_grid, 5, 'Expedition List End Y', expeditions_list_end, self.on_button_clicked, self._label_for_button)
         helper.create_pos_group(third_grid, 6, 'End Travel Title', end_travel_title_pos, self.on_button_clicked, self._label_for_button)
 
+        bar_pos_label = Gtk.Label("\n")
+        third_grid.attach(bar_pos_label, 0, 7, 1, 1)
+
+        helper.create_pos_group(third_grid, 8, 'Gate Bar', gate_bar_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(third_grid, 9, 'Struct Bar', struct_bar_pos, self.on_button_clicked, self._label_for_button)
+
+
         self.mouseThread = MouseThread(self, self.x_pos_label, self.y_pos_label)
         self.mouseThread.start()
+
+        self.move(100, 100)
 
     def on_button_run_anomaly(self, widget):
         action.active_eve()
@@ -304,8 +319,6 @@ class EVEWindow(Gtk.Window):
             ded_complex.start()
 
             expedition_pos, expedition_info = action.set_expedition_destination()
-
-
 
     def on_button_clicked(self, widget):
         print("Hello World" + widget.get_label())
