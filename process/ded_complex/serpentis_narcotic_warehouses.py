@@ -111,10 +111,6 @@ class SerpentisNarcoticWarehouses(DEDComplex):
         kill_enemy = KillEnemy()
         kill_enemy.start()
 
-        loot_wreck = LootWreck()
-        loot_wreck.set_rare_ship_names(['Serpentis Refinery Headmaster'])
-        loot_wreck.start()
-
         item_pos = action.find_item_in_bar(gate_bar_pos, ['Acceleration Gate to Administration Sector'])
 
         if item_pos is not None:
