@@ -92,11 +92,13 @@
             463,
             545
         ],
-        "gate_bar_pos":[
-          0, 0
+        "gate_bar_pos": [
+            1178,
+            200
         ],
         "struct_bar_pos": [
-          0,0
+            1219,
+            202
         ]
     },
     "combat": {

@@ -25,10 +25,12 @@ loot_pos = config["main"]["warp_dock_loot_pos"]
 loot_all_pos = config["main"]["loot_all_pos"]
 close_inventory_pos = config["main"]["close_inventory_pos"]
 
+anomaly_info_close_pos = config["combat"]["anomaly_info_close_pos"]
+
 
 class SerpentisNarcoticWarehouses(DEDComplex):
     def first_stage(self):
-        item_pos = action.find_item_in_bar(gate_bar_pos, ['Acceleration Gate to Check-In Tunnel'])
+        item_pos = action.find_item_in_bar(gate_bar_pos, ['Ancient Acceleration Gate'])
 
         if item_pos is not None:
             # move to wreck
@@ -38,6 +40,8 @@ class SerpentisNarcoticWarehouses(DEDComplex):
             action.click_pos(warp_dock_loot_pos)
 
             action.check_warp_end(enemy_bar_pos)
+
+            action.click_pos(anomaly_info_close_pos)
         else:
             return False
 
@@ -53,9 +57,21 @@ class SerpentisNarcoticWarehouses(DEDComplex):
             log.info('found item position')
             action.click_pos(item_pos)
 
+            target_info = action.parse_target_data(action.get_target_data())
+            target_distance = action.parse_distance(target_info["distance"])
+
+            if (target_distance["metric"] == "km" and target_distance["number"] * 1000 > loot_distance) or \
+                    (target_distance["metric"] == "m" and target_distance["number"] > loot_distance):
+                log.info('flying to wreck')
+                if target_distance["metric"] == "km":
+                    target_distance["number"] *= 1000
+
+                action.fly_to_target(target_distance["number"], loot_distance)
+
             action.click_pos(warp_dock_loot_pos)
 
             action.check_warp_end(enemy_bar_pos)
+            action.click_pos(anomaly_info_close_pos)
         else:
             return False
 
@@ -71,9 +87,21 @@ class SerpentisNarcoticWarehouses(DEDComplex):
             log.info('found item position')
             action.click_pos(item_pos)
 
+            target_info = action.parse_target_data(action.get_target_data())
+            target_distance = action.parse_distance(target_info["distance"])
+
+            if (target_distance["metric"] == "km" and target_distance["number"] * 1000 > loot_distance) or \
+                    (target_distance["metric"] == "m" and target_distance["number"] > loot_distance):
+                log.info('flying to wreck')
+                if target_distance["metric"] == "km":
+                    target_distance["number"] *= 1000
+
+                action.fly_to_target(target_distance["number"], loot_distance)
+
             action.click_pos(warp_dock_loot_pos)
 
             action.check_warp_end(enemy_bar_pos)
+            action.click_pos(anomaly_info_close_pos)
         else:
             return False
 
@@ -107,15 +135,14 @@ class SerpentisNarcoticWarehouses(DEDComplex):
             action.click_pos(warp_dock_loot_pos)
 
             action.check_warp_end(enemy_bar_pos)
+
+            action.click_pos(anomaly_info_close_pos)
         else:
             return False
 
         return True
 
     def fifth_stage(self):
-        # activate sub module
-        action.click_sub_modules()
-
         item_pos = action.find_item_in_bar(struct_bar_pos, ['Serpentis Supply Stronghold'])
         if item_pos is not None:
             target_info = action.parse_target_data(action.get_target_data())
@@ -136,9 +163,10 @@ class SerpentisNarcoticWarehouses(DEDComplex):
 
             log.info('killing target')
             action.destroy_target(with_periscope_drones=True, periscope_timeout=60)
-
             sleep(10)
-            container_item_pos = action.find_item_in_bar(struct_bar_pos, ['container'])
+
+            action.click_pos(anomaly_info_close_pos)
+            container_item_pos = action.find_item_in_bar(struct_bar_pos, ['Cargo Container'])
 
             while True:
                 if container_item_pos is not None:
@@ -161,14 +189,11 @@ class SerpentisNarcoticWarehouses(DEDComplex):
                 else:
                     break
 
-                container_item_pos = action.find_item_in_bar(struct_bar_pos, ['container'], start_item_pos=container_item_pos + 18)
+                container_item_pos = action.find_item_in_bar(struct_bar_pos, ['Cargo Container'], start_item_pos=container_item_pos + 18)
         else:
-            # de-activate sub modules
-            action.click_sub_modules()
             return False
 
-        # de-activate sub modules
-        action.click_sub_modules()
+
         return True
 
     def start(self):
@@ -189,3 +214,7 @@ class SerpentisNarcoticWarehouses(DEDComplex):
 
         result = self.fourth_stage()
 
+        if not result:
+            return
+
+        self.fifth_stage()

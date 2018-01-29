@@ -309,6 +309,10 @@ class EVEWindow(Gtk.Window):
         action.active_eve()
 
         expedition_pos, expedition_info = action.set_expedition_destination()
+        #s = "16 hours, 48 minutes and 50 seconds	2018.01.29 12:50:00	Grinacanne	0	Serpentis Narcotic Warehouses"
+        #expedition_info = action.parse_expedition_data(s)
+        #expedition_pos = expeditions_item_pos
+        #expedition_pos[1] = expedition_pos[1] + 20
 
         while expedition_info is not None:
             self.on_button_run_anomaly(widget)

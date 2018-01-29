@@ -35,6 +35,8 @@ expeditions_list_end_y = config["main"]["expeditions_list_end"][1]
 # ship constant
 optimal_distance = config["combat"]["optimal_distance"]  # km
 
+anomaly_info_close_pos = config["combat"]["anomaly_info_close_pos"]
+
 max_speed = config["ship"]["max_speed"]  # m/s
 speed_module_pos = config["ship"]["speed_module_pos"]
 
@@ -407,6 +409,9 @@ def warp_to_ded_complex(expedition_pos):
 
     pyautogui.moveRel(25, 10, duration=0.2)
     pyautogui.click()
+
+    click_pos(journal_close_button_pos)
+    click_pos(anomaly_info_close_pos)
 
     check_warp_end(gate_bar_pos)
 
