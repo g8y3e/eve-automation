@@ -1,93 +1,92 @@
 {
     "main": {
         "bar_item_pos": [
-            1026,
-            231
+            1102,
+            241
         ],
         "align_target_pos": [
-            945,
-            105
-        ],
-        "warp_dock_loot_pos": [
-            1015,
-            106
-        ],
-        "anomaly_pos": [
-            570,
+            1000,
             124
         ],
+        "warp_dock_loot_pos": [
+            1048,
+            123
+        ],
+        "anomaly_pos": [
+            550,
+            151
+        ],
         "anomaly_warp_x": [
-            742,
-            125
+            755,
+            150
         ],
         "anomaly_list_end_y": [
-            506,
-            734
+            631,
+            511
         ],
         "drone_in_bay_pos": [
-            197,
-            538
+            94,
+            396
         ],
         "active_eve_pos": [
-            655,
-            9
+            455,
+            33
         ],
         "lock_target_pos": [
-            1078,
-            112
+            1124,
+            124
         ],
         "close_inventory_pos": [
-            798,
-            276
+            889,
+            164
         ],
         "loot_all_pos": [
-            409,
-            699
+            495,
+            579
         ],
         "copy_target_data_pos": [
-            984,
-            77
+            1042,
+            88
         ],
         "travel_title_pos": [
-            92,
-            131
+            86,
+            155
         ],
         "warp_bar_pos": [
-            1039,
-            186
+            1048,
+            198
         ],
         "wreck_bar_pos": [
-            1080,
-            184
+            1136,
+            199
         ],
         "enemy_bar_pos": [
-            994,
-            187
+            1092,
+            197
         ],
         "item_bar_end_y": [
-            1093,
-            975
+            1140,
+            742
         ]
     },
     "combat": {
         "anomaly_info_close_pos": [
-            797,
-            796
+            808,
+            570
         ],
         "optimal_distance": 25000,
         "loot_distance": 2000,
         "rare_ship_name": [
             "Dread",
             "Sentient",
-            "Shadow Serpentis",
-            "Coreli",
-            "Splinter"
+            "Shadow Serpentis"
         ],
         "anomaly_name": [
             "Guristas Hideaway",
             "Guristas Refuge",
             "Drone Cluster",
             "Drone Assembly",
+            "Drone Collection ",
             "Serpentis Refuge",
             "Serpentis Hideaway",
             "Serpentis Burrow"
@@ -102,28 +101,28 @@
     },
     "ship": {
         "sub_modules_pos_1": [
-            791,
-            886
+            789,
+            650
         ],
         "max_speed": 400,
         "timeout": {
-          "warp_to_anomaly": 240
+            "warp_to_anomaly": 240
         },
         "speed_module_pos": [
-            761,
-            840
+            760,
+            605
         ],
         "sub_modules_pos_2": [
-            808,
-            924
+            839,
+            652
         ],
         "attack_module_pos": [
-            918,
-            931
+            865,
+            697
         ],
         "sub_modules_pos_3": [
-            759,
-            926
+            761,
+            694
         ]
     }
 }

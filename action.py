@@ -51,11 +51,10 @@ def get_target_data():
     pyautogui.moveTo(*copy_target_data_pos, duration=0.5)
     pyautogui.click(button='right')
 
-    pyautogui.moveRel(25, 10, duration=0.5)
+    pyautogui.moveRel(25, 10, duration=0.2)
     pyautogui.click(interval=0.2)
 
     clipboard_data = helper.get_data_from_clipboard()
-    print('Current clipboard data: ' + clipboard_data.replace("▒", ""))
 
     return clipboard_data
 
@@ -113,9 +112,9 @@ def fly_to_target(distance, opt_distance=optimal_distance, speed=max_speed):
             sleep(wait_time)
 
         target_info = parse_target_data(get_target_data())
-		
-        log.info('Current target info: ' + str(target_info)) 
-		
+
+        log.info('Current target info: ' + str(target_info))
+
         target_distance = parse_distance(target_info["distance"])
 
         if distance <= opt_distance:
@@ -149,7 +148,7 @@ def jump_through_gate():
     pyautogui.moveTo(*travel_title_pos, duration=0.5)
     pyautogui.click(button='right')
 
-    pyautogui.moveRel(25, 10, duration=0.5)
+    pyautogui.moveRel(25, 10, duration=0.2)
     pyautogui.click()
 
 
@@ -157,7 +156,7 @@ def get_jump_title_data():
     pyautogui.moveTo(*travel_title_pos, duration=0.5)
     pyautogui.click(button='right')
 
-    pyautogui.moveRel(25, 10, duration=0.5)
+    pyautogui.moveRel(25, 10, duration=0.2)
     pyautogui.click()
 
     return helper.get_data_from_clipboard()
@@ -168,8 +167,8 @@ def init_gate_warp():
     click_pos(warp_gate_pos)
 
 
-def click_pos(click_pos, duration=0.5, pause=0.1):
-    pyautogui.moveTo(*click_pos, duration=duration)
+def click_pos(click_target_pos, duration=0.5, pause=0.1):
+    pyautogui.moveTo(*click_target_pos, duration=duration)
     pyautogui.click(pause=pause)
 
 
@@ -238,8 +237,6 @@ def find_anomaly_pos(anomaly_init_pos, anomaly_list):
         anomaly_data = copy_data_from_pos(anomaly_pos)
         anomaly_info = parse_anomaly_data(anomaly_data)
 
-        log.info('Current anomaly data: ' + anomaly_data)
-
         if len(anomaly_info) == 4:
             if prev_anomaly_id == anomaly_info['id']:
                 return None, None
@@ -281,4 +278,14 @@ def click_sub_modules():
     click_pos(sub_modules_pos_1)
     click_pos(sub_modules_pos_2)
     click_pos(sub_modules_pos_3)
-    
+
+
+def get_mission_from_agent(agent_pos):
+    click_pos(agent_pos)
+
+    #click_pos(request_miss_from_agent_pos)
+    sleep(helper.get_random_delay(1, 3))
+
+    # get mission name
+    return 'Cargo Delivery Objectives'
+

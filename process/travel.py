@@ -34,9 +34,9 @@ class Travel(Process):
             log.info('has destination path')
             prev_system = clipboard_data
             # check warp bar
-            action.init_gate_warp()
 
             while True:
+                action.init_gate_warp()
                 action.click_pos(warp_pos)
 
                 warp_delay = helper.get_random_delay(8, 15)

@@ -182,6 +182,10 @@ class EVEWindow(Gtk.Window):
         run_agent_game.connect("clicked", self.on_button_run_agent)
         left_grid.attach(run_agent_game, 0, 14, 1, 1)
 
+        run_agent_game = Gtk.Button(label='Run Travel Game')
+        run_agent_game.connect("clicked", self.on_button_run_travel)
+        left_grid.attach(run_agent_game, 0, 15, 1, 1)
+
         bar_pos_label = Gtk.Label("GUI Positions:\n")
         right_grid.add(bar_pos_label)
 
@@ -217,6 +221,7 @@ class EVEWindow(Gtk.Window):
 
         warp = WarpToAnomaly()
         warp.start()
+        #fixme add fuctionality to add path when path ends
         while not warp.is_anomaly_end():
             kill = KillEnemy()
             kill.start()
@@ -245,6 +250,12 @@ class EVEWindow(Gtk.Window):
 
     def on_button_run_agent(self, widget):
         pass
+
+    def on_button_run_travel(self, wiget):
+        action.active_eve()
+
+        travel = Travel()
+        travel.start()
 
     def on_button_clicked(self, widget):
         print("Hello World" + widget.get_label())

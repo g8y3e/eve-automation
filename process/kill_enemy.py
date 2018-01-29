@@ -10,7 +10,7 @@ enemy_bar_pos = config["main"]["enemy_bar_pos"]
 enemy_pos = config["main"]["bar_item_pos"]
 
 attack_module_pos = config["ship"]["attack_module_pos"]
-
+anomaly_info_close_pos = config["combat"]["anomaly_info_close_pos"]
 
 class KillEnemy(Process):
     def start(self):
@@ -45,6 +45,7 @@ class KillEnemy(Process):
 
         # de-activate sub modules
         action.click_sub_modules()
+        action.click_pos(anomaly_info_close_pos)
 
         log.info('# elapsed time: ' + str(log.elapsed_time()) + ' sec')
         log.info('# end killing enemies')
