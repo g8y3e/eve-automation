@@ -16,6 +16,8 @@ from process.travel import Travel
 from process.loot_wreck import LootWreck
 from process.warp_to_anomaly import WarpToAnomaly
 
+from process.ded_complex import ded_complex_factory
+
 warp_bar_pos = config["main"]["warp_bar_pos"]
 enemy_bar_pos = config["main"]["enemy_bar_pos"]
 wreck_bar_pos = config["main"]["wreck_bar_pos"]
@@ -23,6 +25,13 @@ warp_dock_loot_pos = config["main"]["warp_dock_loot_pos"]
 align_target_pos = config["main"]["align_target_pos"]
 lock_target_pos = config["main"]["lock_target_pos"]
 anomaly_pos = config["main"]["anomaly_pos"]
+
+journal_button_pos = config["main"]["journal_button_pos"]
+journal_close_button_pos = config["main"]["journal_close_button_pos"]
+journal_expeditions_pos = config["main"]["journal_expeditions_pos"]
+expeditions_item_pos = config["main"]["expeditions_item_pos"]
+expeditions_list_end = config["main"]["expeditions_list_end"]
+end_travel_title_pos = config["main"]["end_travel_title_pos"]
 
 item_bar_end_y = config["main"]["item_bar_end_y"]
 
@@ -76,6 +85,13 @@ config_label = {
     'Sub-Module 3': ['ship', 'sub_modules_pos_3'],
 
     'Anomaly info Close': ['combat', 'anomaly_info_close_pos'],
+
+    'Journal Button': ['main', 'journal_button_pos'],
+    'Journal Close Button': ['main', 'journal_close_button_pos'],
+    'Journal Expedition': ['main', 'journal_expeditions_pos'],
+    'Expedition Item': ['main', 'expeditions_item_pos'],
+    'Expedition List End Y': ['main', 'expeditions_list_end'],
+    'End Travel Title': ['main', 'end_travel_title_pos'],
 
     'Eve Window': ['main', 'active_eve_pos'],
 }
@@ -142,76 +158,93 @@ class EVEWindow(Gtk.Window):
         main_grid = Gtk.Grid()
         self.add(main_grid)
 
-        left_grid = Gtk.Grid()
-        main_grid.attach(left_grid, 0, 0, 1, 1)
+        first_grid = Gtk.Grid()
+        main_grid.attach(first_grid, 0, 0, 1, 1)
 
-        right_grid = Gtk.Grid()
-        main_grid.attach(right_grid, 1, 0, 1, 1)
+        second_grid = Gtk.Grid()
+        main_grid.attach(second_grid, 1, 0, 1, 1)
+
+        third_grid = Gtk.Grid()
+        main_grid.attach(third_grid, 2, 0, 1, 1)
 
         bar_pos_label = Gtk.Label("Item bar positions:\n")
-        left_grid.add(bar_pos_label)
+        first_grid.add(bar_pos_label)
 
-        helper.create_pos_group(left_grid, 1, 'Warp Bar', warp_bar_pos, self.on_button_clicked, self._label_for_button)
-        helper.create_pos_group(left_grid, 2, 'Enemy Bar', enemy_bar_pos, self.on_button_clicked, self._label_for_button)
-        helper.create_pos_group(left_grid, 3, 'Wreck Bar', wreck_bar_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(first_grid, 1, 'Warp Bar', warp_bar_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(first_grid, 2, 'Enemy Bar', enemy_bar_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(first_grid, 3, 'Wreck Bar', wreck_bar_pos, self.on_button_clicked, self._label_for_button)
 
         navigation_label = Gtk.Label("\n\nNavigation buttons:\n")
-        left_grid.attach(navigation_label, 0, 4, 1, 1)
+        first_grid.attach(navigation_label, 0, 4, 1, 1)
 
-        helper.create_pos_group(left_grid, 5, 'Warp Dock Loot', warp_bar_pos, self.on_button_clicked, self._label_for_button)
-        helper.create_pos_group(left_grid, 6, 'Align', align_target_pos, self.on_button_clicked, self._label_for_button)
-        helper.create_pos_group(left_grid, 7, 'Lock Target', lock_target_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(first_grid, 5, 'Warp Dock Loot', warp_bar_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(first_grid, 6, 'Align', align_target_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(first_grid, 7, 'Lock Target', lock_target_pos, self.on_button_clicked, self._label_for_button)
 
         navigation_label = Gtk.Label("\n\nGUI buttons:\n")
-        left_grid.attach(navigation_label, 0, 8, 1, 1)
+        first_grid.attach(navigation_label, 0, 8, 1, 1)
 
-        helper.create_pos_group(left_grid, 9, 'Anomaly', warp_bar_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(first_grid, 9, 'Anomaly', warp_bar_pos, self.on_button_clicked, self._label_for_button)
 
         init_label = Gtk.Label("\n\nInit:\n")
-        left_grid.attach(init_label, 0, 10, 1, 1)
-        helper.create_pos_group(left_grid, 11, 'Eve Window', active_eve_pos, self.on_button_clicked, self._label_for_button)
+        first_grid.attach(init_label, 0, 10, 1, 1)
+        helper.create_pos_group(first_grid, 11, 'Eve Window', active_eve_pos, self.on_button_clicked, self._label_for_button)
 
         empty_label = Gtk.Label("\n\n\n\n\n\n\n")
         run_anomaly_game = Gtk.Button(label='Run Anomaly Game')
         run_anomaly_game.connect("clicked", self.on_button_run_anomaly)
 
-        left_grid.attach(empty_label, 0, 12, 1, 1)
-        left_grid.attach(run_anomaly_game, 0, 13, 1, 1)
+        first_grid.attach(empty_label, 0, 12, 1, 1)
+        first_grid.attach(run_anomaly_game, 0, 13, 1, 1)
 
         run_agent_game = Gtk.Button(label='Run Agent Game')
         run_agent_game.connect("clicked", self.on_button_run_agent)
-        left_grid.attach(run_agent_game, 0, 14, 1, 1)
+        first_grid.attach(run_agent_game, 0, 14, 1, 1)
 
         run_agent_game = Gtk.Button(label='Run Travel Game')
         run_agent_game.connect("clicked", self.on_button_run_travel)
-        left_grid.attach(run_agent_game, 0, 15, 1, 1)
+        first_grid.attach(run_agent_game, 0, 15, 1, 1)
+
+        run_agent_game = Gtk.Button(label='Run Expedition Game')
+        run_agent_game.connect("clicked", self.on_button_run_ded)
+        first_grid.attach(run_agent_game, 0, 16, 1, 1)
 
         bar_pos_label = Gtk.Label("GUI Positions:\n")
-        right_grid.add(bar_pos_label)
+        second_grid.add(bar_pos_label)
 
-        helper.create_pos_group(right_grid, 1, 'Item Bar End Y', item_bar_end_y, self.on_button_clicked, self._label_for_button)
-        helper.create_pos_group(right_grid, 2, 'Anomaly End Y', anomaly_list_end_y, self.on_button_clicked, self._label_for_button)
-        helper.create_pos_group(right_grid, 3, 'Anomaly Warp X', anomaly_warp_x, self.on_button_clicked, self._label_for_button)
-        helper.create_pos_group(right_grid, 4, 'Travel Title', travel_title_pos, self.on_button_clicked, self._label_for_button)
-        helper.create_pos_group(right_grid, 5, 'Bar Item', bar_item_pos, self.on_button_clicked, self._label_for_button)
-        helper.create_pos_group(right_grid, 6, 'Drone In Bay', drone_in_bay_pos, self.on_button_clicked, self._label_for_button)
-        helper.create_pos_group(right_grid, 7, 'Anomaly info Close', anomaly_info_close_pos, self.on_button_clicked, self._label_for_button)
-        helper.create_pos_group(right_grid, 8, 'Copy Target Data', copy_target_data_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(second_grid, 1, 'Item Bar End Y', item_bar_end_y, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(second_grid, 2, 'Anomaly End Y', anomaly_list_end_y, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(second_grid, 3, 'Anomaly Warp X', anomaly_warp_x, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(second_grid, 4, 'Travel Title', travel_title_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(second_grid, 5, 'Bar Item', bar_item_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(second_grid, 6, 'Drone In Bay', drone_in_bay_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(second_grid, 7, 'Anomaly info Close', anomaly_info_close_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(second_grid, 8, 'Copy Target Data', copy_target_data_pos, self.on_button_clicked, self._label_for_button)
 
         inventory_label = Gtk.Label("\n\nInventory Buttons:\n")
-        right_grid.attach(inventory_label, 0, 9, 1, 1)
+        second_grid.attach(inventory_label, 0, 9, 1, 1)
 
-        helper.create_pos_group(right_grid, 10, 'Close Inventory', close_inventory_pos, self.on_button_clicked, self._label_for_button)
-        helper.create_pos_group(right_grid, 11, 'Loot All', loot_all_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(second_grid, 10, 'Close Inventory', close_inventory_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(second_grid, 11, 'Loot All', loot_all_pos, self.on_button_clicked, self._label_for_button)
 
         inventory_label = Gtk.Label("\n\nShip Buttons:\n")
-        right_grid.attach(inventory_label, 0, 12, 1, 1)
+        second_grid.attach(inventory_label, 0, 12, 1, 1)
 
-        helper.create_pos_group(right_grid, 13, 'Attack Module', attack_module_pos, self.on_button_clicked, self._label_for_button)
-        helper.create_pos_group(right_grid, 14, 'Speed Module', speed_module_pos, self.on_button_clicked, self._label_for_button)
-        helper.create_pos_group(right_grid, 15, 'Sub-Module 1', sub_modules_pos_1, self.on_button_clicked, self._label_for_button)
-        helper.create_pos_group(right_grid, 16, 'Sub-Module 2', sub_modules_pos_2, self.on_button_clicked, self._label_for_button)
-        helper.create_pos_group(right_grid, 17, 'Sub-Module 3', sub_modules_pos_3, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(second_grid, 13, 'Attack Module', attack_module_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(second_grid, 14, 'Speed Module', speed_module_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(second_grid, 15, 'Sub-Module 1', sub_modules_pos_1, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(second_grid, 16, 'Sub-Module 2', sub_modules_pos_2, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(second_grid, 17, 'Sub-Module 3', sub_modules_pos_3, self.on_button_clicked, self._label_for_button)
+
+        bar_pos_label = Gtk.Label("\n")
+        third_grid.add(bar_pos_label)
+
+        helper.create_pos_group(third_grid, 1, 'Journal Button', journal_button_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(third_grid, 2, 'Journal Close Button', journal_close_button_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(third_grid, 3, 'Journal Expedition', journal_expeditions_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(third_grid, 4, 'Expedition Item', expeditions_item_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(third_grid, 5, 'Expedition List End Y', expeditions_list_end, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(third_grid, 6, 'End Travel Title', end_travel_title_pos, self.on_button_clicked, self._label_for_button)
 
         self.mouseThread = MouseThread(self, self.x_pos_label, self.y_pos_label)
         self.mouseThread.start()
@@ -251,11 +284,28 @@ class EVEWindow(Gtk.Window):
     def on_button_run_agent(self, widget):
         pass
 
-    def on_button_run_travel(self, wiget):
+    def on_button_run_travel(self, widget):
         action.active_eve()
 
         travel = Travel()
         travel.start()
+
+    def on_button_run_ded(self, widget):
+        action.active_eve()
+
+        expedition_pos, expedition_info = action.set_expedition_destination()
+
+        while expedition_info is not None:
+            self.on_button_run_anomaly(widget)
+
+            action.warp_to_ded_complex(expedition_pos)
+
+            ded_complex = ded_complex_factory.create_complex(expedition_info['name'])
+            ded_complex.start()
+
+            expedition_pos, expedition_info = action.set_expedition_destination()
+
+
 
     def on_button_clicked(self, widget):
         print("Hello World" + widget.get_label())

@@ -12,6 +12,7 @@ enemy_pos = config["main"]["bar_item_pos"]
 attack_module_pos = config["ship"]["attack_module_pos"]
 anomaly_info_close_pos = config["combat"]["anomaly_info_close_pos"]
 
+
 class KillEnemy(Process):
     def start(self):
         action.click_pos(enemy_bar_pos)

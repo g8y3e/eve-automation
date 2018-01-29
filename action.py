@@ -11,6 +11,7 @@ from config import config
 
 # constants move to config
 travel_title_pos = config["main"]["travel_title_pos"]
+end_travel_title_pos = config["main"]["end_travel_title_pos"]
 
 active_eve_pos = config["main"]["active_eve_pos"]
 copy_target_data_pos = config["main"]["copy_target_data_pos"]
@@ -23,6 +24,12 @@ drone_in_bay_pos = config["main"]["drone_in_bay_pos"]
 
 item_bar_end_y = config["main"]["item_bar_end_y"][1]
 anomaly_list_end_y = config["main"]["anomaly_list_end_y"][1]
+
+journal_button_pos = config["main"]["journal_button_pos"]
+journal_close_button_pos = config["main"]["journal_close_button_pos"]
+journal_expeditions_pos = config["main"]["journal_expeditions_pos"]
+expeditions_item_pos = config["main"]["expeditions_item_pos"]
+expeditions_list_end_y = config["main"]["expeditions_list_end"][1]
 
 
 # ship constant
@@ -206,7 +213,7 @@ def find_item_in_bar(bar_pos, ship_names):
 
 def copy_data_from_pos(pos):
     click_pos(pos, pause=1)
-    pyautogui.hotkey('ctrl', 'c', interval=0.2, pause=1)
+    pyautogui.hotkey('ctrl', 'c', interval=0.2, pause=0.5)
 
     return helper.get_data_from_clipboard()
 
@@ -289,3 +296,104 @@ def get_mission_from_agent(agent_pos):
     # get mission name
     return 'Cargo Delivery Objectives'
 
+
+def parse_expedition_data(data):
+    # 7 hours, 40 minutes and 33 seconds	2018.01.29 01:54:00	Gulmorogod	21	Serpentis Narcotic Warehouses
+    expedition_info = dict()
+
+    if data is None:
+        return expedition_info
+
+    data_list = re.split(r'\t+', data)
+
+    if len(data_list) >= 5:
+        expedition_info['time'] = data_list[0]
+        expedition_info['date'] = data_list[1]
+        expedition_info['system_name'] = data_list[2]
+        expedition_info['jump_count'] = data_list[3]
+        expedition_info['name'] = data_list[4]
+
+    return expedition_info
+
+
+def get_end_jump_title_data():
+    pyautogui.moveTo(*end_travel_title_pos, duration=0.5)
+    pyautogui.click(button='right')
+
+    pyautogui.moveRel(25, 10, duration=0.2)
+    pyautogui.click()
+
+    return helper.get_data_from_clipboard()
+
+
+def parse_path_data(path_data):
+    empty_path = {
+        'name': 'empty',
+        'security_status': 42
+    }
+
+    if path_data is None or len(path_data) == 0:
+        return empty_path
+
+    result_object = dict()
+
+    start_sys_prefix = "'Current Destination'>"
+    start_sys_index = path_data.find(start_sys_prefix)
+    end_sys_index = path_data.find("</url>")
+
+    if start_sys_index > -1 and end_sys_index > -1:
+        result_object['name'] = path_data[start_sys_index + len(start_sys_prefix): end_sys_index]
+
+    start_sec_prefix = "<hint='Security status'>"
+    start_sec_index = path_data.find(start_sec_prefix)
+    end_sec_index = path_data.find("</hint>")
+
+    try:
+        if start_sec_index > -1 and end_sec_index > -1:
+            result_object['security_status'] = float(path_data[start_sec_index + len(start_sec_prefix): end_sec_index])
+    except ValueError:
+        pass
+
+    return result_object
+
+
+def set_expedition_path(expedition_pos):
+    pyautogui.moveTo(*expedition_pos, duration=0.5)
+    pyautogui.click(button='right')
+
+    pyautogui.moveRel(25, 30, duration=0.2)
+    pyautogui.click()
+
+
+def set_expedition_destination():
+    click_pos(journal_button_pos)
+    click_pos(journal_expeditions_pos)
+
+    expedition_pos = copy.deepcopy(expeditions_item_pos)
+
+    prev_anomaly_id = ''
+    while True:
+        expedition_data = copy_data_from_pos(expedition_pos)
+
+        set_expedition_path(expedition_pos)
+        path_data = get_end_jump_title_data()
+
+        expedition_info = parse_expedition_data(expedition_data)
+        expedition_path_info = parse_path_data(path_data)
+
+        if 'security_status' in expedition_path_info and expedition_path_info['security_status'] >= 0.5:
+            click_pos(journal_close_button_pos)
+            return expedition_pos, expedition_info
+
+        expedition_pos[1] = expedition_pos[1] + 20
+
+        if (expedition_pos[1] > expeditions_list_end_y) or len(expedition_info) == 0:
+            return None, None
+
+def warp_to_ded_complex(expedition_pos):
+    pass
+
+#exp_data = '7 hours, 40 minutes and 33 seconds	2018.01.29 01:54:00	Gulmorogod	21	Serpentis Narcotic Warehouses'
+#res = parse_expedition_data(exp_data)
+#path_data = "<center><url=showinfo:5//30000142 alt='Current Destination'>Jita</url></b> <color=0xff4cffccL><hint='Security status'>0.9</hint></color><fontsize=12><fontsize=8> </fontsize>&lt;<fontsize=8> </fontsize><url=showinfo:4//20000020>Kimotoro</url><fontsize=8> </fontsize>&lt;<fontsize=8> </fontsize><url=showinfo:3//10000002>The Forge</url>"
+#res = parse_path_data(path_data)

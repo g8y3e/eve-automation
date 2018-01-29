@@ -52,6 +52,10 @@
             86,
             155
         ],
+        "end_travel_title_pos": [
+            90,
+            209
+        ],
         "warp_bar_pos": [
             1048,
             198
@@ -67,6 +71,26 @@
         "item_bar_end_y": [
             1140,
             742
+        ],
+        "journal_button_pos": [
+            18,
+            612
+        ],
+        "journal_close_button_pos": [
+            993,
+            262
+        ],
+        "journal_expeditions_pos": [
+            467,
+            282
+        ],
+        "expeditions_item_pos": [
+            510,
+            323
+        ],
+        "expeditions_list_end": [
+            463,
+            545
         ]
     },
     "combat": {
