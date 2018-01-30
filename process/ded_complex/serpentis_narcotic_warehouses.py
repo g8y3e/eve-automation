@@ -139,6 +139,9 @@ class SerpentisNarcoticWarehouses(DEDComplex):
         return True
 
     def fifth_stage(self):
+        # activate sub module
+        action.click_sub_modules()
+
         item_pos = action.find_item_in_bar(struct_bar_pos, ['Serpentis Supply Stronghold'])
         if item_pos is not None:
             target_info = action.parse_target_data(action.get_target_data())
@@ -158,7 +161,7 @@ class SerpentisNarcoticWarehouses(DEDComplex):
             action.click_pos(attack_module_pos)
 
             log.info('killing target')
-            action.destroy_target(with_periscope_drones=True, periscope_timeout=60)
+            action.destroy_target(with_periscope_drones=True, periscope_timeout=24)
             sleep(10)
 
             action.click_pos(anomaly_info_close_pos)
@@ -190,6 +193,8 @@ class SerpentisNarcoticWarehouses(DEDComplex):
             return False
 
 
+        # de-activate sub module
+        action.click_sub_modules()
         return True
 
     def start(self):
