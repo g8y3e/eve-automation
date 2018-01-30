@@ -141,13 +141,14 @@ def destroy_target(with_periscope_drones=False, periscope_timeout=0):
     delta_time = 0
     sleep_time = 3
 
+    target_info = parse_target_data(get_target_data())
+    current_target_name = target_info['name']
     while True:
         sleep(sleep_time)
         delta_time += sleep_time
 
-        target_info = parse_target_data(get_target_data())
         log.info('Target info: ' + str(target_info))
-        if target_info["name"] == "empty":
+        if target_info["name"] == "empty" or target_info['name'] != current_target_name:
             break
 
         if with_periscope_drones and delta_time >= periscope_timeout:
@@ -157,6 +158,8 @@ def destroy_target(with_periscope_drones=False, periscope_timeout=0):
         # press F
         pyautogui.press('l', pause=3)
         pyautogui.press('f')
+
+        target_info = parse_target_data(get_target_data())
 
     pyautogui.press('r', pause=5)
 
