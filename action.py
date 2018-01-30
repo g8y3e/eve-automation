@@ -97,12 +97,15 @@ def parse_distance(distance):
     elif " m" in distance:
         info["metric"] = "m"
         metric_len = 2
-    
-    disntace = distance[:-metric_len].replace(str(chr(160)), "")
-    disntace = disntace.replace(",", "")
-    info["number"] = int(disntace)
-    
-    log.info('Distance info: ' + str(info["number"]))
+
+    try:
+        distance = distance[:-metric_len].replace(str(chr(160)), "")
+        distance = distance.replace(",", "")
+        info["number"] = int(distance)
+
+        log.info('Distance info: ' + str(info["number"]))
+    except ValueError:
+        pass
 
     return info
 

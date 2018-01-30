@@ -26,23 +26,26 @@ class KillEnemy(Process):
             action.click_pos(enemy_pos)
 
             target_info = action.parse_target_data(action.get_target_data())
-            target_distance = action.parse_distance(target_info["distance"])
+            if 'distance' in target_info:
+                target_distance = action.parse_distance(target_info["distance"])
 
-            log.info('\ntarget name: ' + target_info["name"])
+                log.info('\ntarget name: ' + target_info["name"])
 
-            if target_info["name"] == "empty":
+                if target_info["name"] == "empty":
+                    break
+
+                if target_distance["metric"] == "km" and target_distance["number"] * 1000 > action.optimal_distance:
+                    action.fly_to_target(target_distance["number"] * 1000)
+
+                log.info('lock target')
+                action.click_pos(lock_target_pos)
+
+                action.click_pos(attack_module_pos)
+
+                log.info('killing target')
+                action.destroy_target()
+            else:
                 break
-
-            if target_distance["metric"] == "km" and target_distance["number"] * 1000 > action.optimal_distance:
-                action.fly_to_target(target_distance["number"] * 1000)
-
-            log.info('lock target')
-            action.click_pos(lock_target_pos)
-
-            action.click_pos(attack_module_pos)
-
-            log.info('killing target')
-            action.destroy_target()
 
         # de-activate sub modules
         action.click_sub_modules()
