@@ -13,6 +13,8 @@ from config import config
 travel_title_pos = config["main"]["travel_title_pos"]
 end_travel_title_pos = config["main"]["end_travel_title_pos"]
 
+lock_target_pos = config["main"]["lock_target_pos"]
+
 active_eve_pos = config["main"]["active_eve_pos"]
 copy_target_data_pos = config["main"]["copy_target_data_pos"]
 align_target_pos = config["main"]["align_target_pos"]
@@ -37,6 +39,8 @@ optimal_distance = config["combat"]["optimal_distance"]  # km
 
 anomaly_info_close_pos = config["combat"]["anomaly_info_close_pos"]
 
+jam_mobs_name = config["combat"]["jam_mobs_name"]
+
 max_speed = config["ship"]["max_speed"]  # m/s
 speed_module_pos = config["ship"]["speed_module_pos"]
 
@@ -50,14 +54,23 @@ warp_to_anomaly_timeout = config["ship"]["timeout"]["warp_to_anomaly"]
 bar_item_pos = config["main"]["bar_item_pos"]
 enemy_bar_pos = config["main"]["enemy_bar_pos"]
 
+accept_mission_pos = config["mission"]["accept_mission_pos"]
+agent_start_conversation_pos = config["mission"]["agent_start_conversation_pos"]
+mission_title_pos = config["mission"]["mission_title_pos"]
+close_mission_pos = config["mission"]["close_mission_pos"]
+mission_path_pos = config["mission"]["mission_path_pos"]
+
+
+undock_pos = config["main"]["undock_pos"]
+
 
 def active_eve():
     pyautogui.moveTo(*active_eve_pos, duration=1.0)
     pyautogui.click()
 
 
-def get_target_data():
-    pyautogui.moveTo(*copy_target_data_pos, duration=0.5)
+def get_target_data(target_pos=copy_target_data_pos):
+    pyautogui.moveTo(*target_pos, duration=0.5)
     pyautogui.click(button='right')
 
     pyautogui.moveRel(25, 10, duration=0.2)
@@ -114,6 +127,8 @@ def fly_to_target(distance, opt_distance=optimal_distance, speed=max_speed):
     pyautogui.moveTo(*speed_module_pos, duration=0.5)
     pyautogui.click()
 
+    is_target_exist = True
+
     while True:
         pyautogui.moveTo(*align_target_pos, duration=0.5)
         pyautogui.click()
@@ -127,6 +142,10 @@ def fly_to_target(distance, opt_distance=optimal_distance, speed=max_speed):
 
         log.info('Current target info: ' + str(target_info))
 
+        if target_info['name'] == 'empty':
+            is_target_exist = False
+            break
+
         target_distance = parse_distance(target_info["distance"])
 
         if distance <= opt_distance:
@@ -138,6 +157,7 @@ def fly_to_target(distance, opt_distance=optimal_distance, speed=max_speed):
 
     pyautogui.moveTo(*speed_module_pos, duration=0.25)
     pyautogui.click()
+    return is_target_exist
 
 
 def destroy_target(with_periscope_drones=False, periscope_timeout=0):
@@ -145,6 +165,13 @@ def destroy_target(with_periscope_drones=False, periscope_timeout=0):
     sleep_time = 3
 
     target_info = parse_target_data(get_target_data())
+
+    is_need_reactivate_lock = False
+    for mob in jam_mobs_name:
+        if mob in target_info["name"]:
+            is_need_reactivate_lock = True
+            break
+
     current_target_name = target_info['name']
     while True:
         sleep(sleep_time)
@@ -153,6 +180,9 @@ def destroy_target(with_periscope_drones=False, periscope_timeout=0):
         log.info('Target info: ' + str(target_info))
         if target_info["name"] == "empty" or target_info['name'] != current_target_name:
             break
+
+        if is_need_reactivate_lock:
+            click_pos(lock_target_pos)
 
         if with_periscope_drones and delta_time >= periscope_timeout:
             delta_time = 0
@@ -421,6 +451,46 @@ def warp_to_ded_complex(expedition_pos):
 
     check_warp_end(gate_bar_pos)
 
+
+def get_mission_title():
+    sleep(5)
+    pyautogui.moveTo(*mission_title_pos, duration=0.5)
+    pyautogui.dragRel(0, 30, 0.3, button='left')
+
+    pyautogui.hotkey('ctrl', 'c', interval=0.2, pause=0.5)
+
+    clipboard_data = helper.get_data_from_clipboard()
+
+    return clipboard_data
+
+
+def get_mission_from_agent():
+    click_pos(agent_start_conversation_pos)
+
+    mission_name = get_mission_title()
+
+    click_pos(accept_mission_pos)
+
+    sleep(5)
+    click_pos(close_mission_pos)
+
+    return mission_name
+
+
+def undock():
+    click_pos(undock_pos)
+
+    sleep(20)
+
+
+def set_mission_destination():
+    click_pos(mission_path_pos)
+    pyautogui.moveRel(0, 120, duration=0.6)
+
+    pyautogui.click()
+
+
+mission_name = "Cargo Delivery Objectives\n"
 
 
 #exp_data = '7 hours, 40 minutes and 33 seconds	2018.01.29 01:54:00	Gulmorogod	21	Serpentis Narcotic Warehouses'

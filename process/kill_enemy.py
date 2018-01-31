@@ -34,16 +34,18 @@ class KillEnemy(Process):
                 if target_info["name"] == "empty":
                     break
 
+                is_target_exist = True
                 if target_distance["metric"] == "km" and target_distance["number"] * 1000 > action.optimal_distance:
-                    action.fly_to_target(target_distance["number"] * 1000)
+                    is_target_exist = action.fly_to_target(target_distance["number"] * 1000)
 
-                log.info('lock target')
-                action.click_pos(lock_target_pos)
+                if is_target_exist:
+                    log.info('lock target')
+                    action.click_pos(lock_target_pos)
 
-                action.click_pos(attack_module_pos)
+                    action.click_pos(attack_module_pos)
 
-                log.info('killing target')
-                action.destroy_target()
+                    log.info('killing target')
+                    action.destroy_target()
             else:
                 break
 

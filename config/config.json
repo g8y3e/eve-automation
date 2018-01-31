@@ -29,8 +29,8 @@
             396
         ],
         "active_eve_pos": [
-            455,
-            33
+            132,
+            34
         ],
         "lock_target_pos": [
             1124,
@@ -49,24 +49,24 @@
             88
         ],
         "travel_title_pos": [
-            86,
-            155
+            96,
+            157
         ],
         "end_travel_title_pos": [
             90,
             209
         ],
         "warp_bar_pos": [
-            1048,
-            198
+            1086,
+            212
         ],
         "wreck_bar_pos": [
-            1136,
-            199
+            1126,
+            209
         ],
         "enemy_bar_pos": [
-            1092,
-            197
+            1043,
+            207
         ],
         "item_bar_end_y": [
             1140,
@@ -99,6 +99,32 @@
         "struct_bar_pos": [
             1219,
             202
+        ],
+        "undock_pos": [
+            1151,
+            200
+        ]
+    },
+    "mission": {
+        "agent_start_conversation_pos": [
+            1245,
+            613
+        ],
+        "accept_mission_pos": [
+            755,
+            658
+        ],
+        "mission_title_pos": [
+            612,
+            169
+        ],
+        "close_mission_pos": [
+            1002,
+            138
+        ],
+        "mission_path_pos": [
+            149,
+            208
         ]
     },
     "combat": {
@@ -112,6 +138,10 @@
             "Dread",
             "Sentient",
             "Shadow Serpentis"
+        ],
+        "jam_mobs_name": [
+          "Pithi Despoiler",
+          "Pithi Saboteur"
         ],
         "anomaly_name": [
             "Guristas Hideaway",

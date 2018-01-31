@@ -62,6 +62,14 @@ anomaly_info_close_pos = config["combat"]["anomaly_info_close_pos"]
 
 active_eve_pos = config["main"]["active_eve_pos"]
 
+agent_start_conversation_pos = config["mission"]["agent_start_conversation_pos"]
+accept_mission_pos = config["mission"]["accept_mission_pos"]
+mission_title_pos = config["mission"]["mission_title_pos"]
+close_mission_pos = config["mission"]["close_mission_pos"]
+mission_path_pos = config["mission"]["mission_path_pos"]
+
+undock_pos = config["main"]["undock_pos"]
+
 config_label = {
     'Warp Bar': ['main', 'warp_bar_pos'],
     'Enemy Bar': ['main', 'enemy_bar_pos'],
@@ -99,6 +107,15 @@ config_label = {
 
     'Gate Bar': ['main', 'gate_bar_pos'],
     'Struct Bar': ['main', 'struct_bar_pos'],
+
+    'Agent Start Conversation': ['mission', 'agent_start_conversation_pos'],
+    'Accept Mission': ['mission', 'accept_mission_pos'],
+    'Mission Title': ['mission', 'mission_title_pos'],
+    'Close Mission': ['mission', 'close_mission_pos'],
+    'Mission Path': ['mission', 'mission_path_pos'],
+
+    'Undock': ['main', 'undock_pos'],
+
 
     'Eve Window': ['main', 'active_eve_pos'],
 }
@@ -207,13 +224,17 @@ class EVEWindow(Gtk.Window):
         run_agent_game.connect("clicked", self.on_button_run_agent)
         first_grid.attach(run_agent_game, 0, 14, 1, 1)
 
-        run_agent_game = Gtk.Button(label='Run Travel Game')
-        run_agent_game.connect("clicked", self.on_button_run_travel)
-        first_grid.attach(run_agent_game, 0, 15, 1, 1)
+        run_travel_game = Gtk.Button(label='Run Travel Game')
+        run_travel_game.connect("clicked", self.on_button_run_travel)
+        first_grid.attach(run_travel_game, 0, 15, 1, 1)
 
-        run_agent_game = Gtk.Button(label='Run Expedition Game')
-        run_agent_game.connect("clicked", self.on_button_run_ded)
-        first_grid.attach(run_agent_game, 0, 16, 1, 1)
+        run_expediotion_game = Gtk.Button(label='Run Expedition Game')
+        run_expediotion_game.connect("clicked", self.on_button_run_ded)
+        first_grid.attach(run_expediotion_game, 0, 16, 1, 1)
+
+        run_mission_game = Gtk.Button(label='Run Missions Game')
+        run_mission_game.connect("clicked", self.on_button_run_missions)
+        first_grid.attach(run_mission_game, 0, 17, 1, 1)
 
         bar_pos_label = Gtk.Label("GUI Positions:\n")
         second_grid.add(bar_pos_label)
@@ -258,11 +279,24 @@ class EVEWindow(Gtk.Window):
         helper.create_pos_group(third_grid, 8, 'Gate Bar', gate_bar_pos, self.on_button_clicked, self._label_for_button)
         helper.create_pos_group(third_grid, 9, 'Struct Bar', struct_bar_pos, self.on_button_clicked, self._label_for_button)
 
+        missions_label = Gtk.Label("\nMissions Possiotions:\n")
+        third_grid.attach(missions_label, 0, 10, 1, 1)
+
+        helper.create_pos_group(third_grid, 11, 'Agent Start Conversation', agent_start_conversation_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(third_grid, 12, 'Accept Mission', accept_mission_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(third_grid, 13, 'Mission Title', mission_title_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(third_grid, 14, 'Close Mission', close_mission_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(third_grid, 15, 'Mission Path', mission_path_pos, self.on_button_clicked, self._label_for_button)
+
+        helper.create_pos_group(third_grid, 16, 'Undock', undock_pos, self.on_button_clicked, self._label_for_button)
 
         self.mouseThread = MouseThread(self, self.x_pos_label, self.y_pos_label)
         self.mouseThread.start()
 
         self.move(100, 100)
+
+    def on_button_run_missions(self, widget):
+        pass
 
     def on_button_run_anomaly(self, widget):
         action.active_eve()
