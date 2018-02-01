@@ -309,14 +309,15 @@ class EVEWindow(Gtk.Window):
         warp.start()
         #fixme add fuctionality to add path when path ends
         while not warp.is_anomaly_end():
-            kill = KillEnemy()
-            kill.start()
+            if not warp.is_anomaly_closed():
+                kill = KillEnemy()
+                kill.start()
 
-            if kill.is_killed_rare_ship():
-                loot_wreck = LootWreck()
-                loot_wreck.start()
-            else:
-                sleep(5)
+                if kill.is_killed_rare_ship():
+                    loot_wreck = LootWreck()
+                    loot_wreck.start()
+                else:
+                    sleep(5)
 
             warp.start()
 
