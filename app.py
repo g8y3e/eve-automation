@@ -70,6 +70,8 @@ mission_path_pos = config["mission"]["mission_path_pos"]
 
 undock_pos = config["main"]["undock_pos"]
 
+grid_bar_pos = config["main"]["grid_bar_pos"]
+
 config_label = {
     'Warp Bar': ['main', 'warp_bar_pos'],
     'Enemy Bar': ['main', 'enemy_bar_pos'],
@@ -107,6 +109,7 @@ config_label = {
 
     'Gate Bar': ['main', 'gate_bar_pos'],
     'Struct Bar': ['main', 'struct_bar_pos'],
+    'Grid Bar': ['main', 'grid_bar_pos'],
 
     'Agent Start Conversation': ['mission', 'agent_start_conversation_pos'],
     'Accept Mission': ['mission', 'accept_mission_pos'],
@@ -278,17 +281,18 @@ class EVEWindow(Gtk.Window):
 
         helper.create_pos_group(third_grid, 8, 'Gate Bar', gate_bar_pos, self.on_button_clicked, self._label_for_button)
         helper.create_pos_group(third_grid, 9, 'Struct Bar', struct_bar_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(third_grid, 10, 'Grid Bar', grid_bar_pos, self.on_button_clicked, self._label_for_button)
 
         missions_label = Gtk.Label("\nMissions Possiotions:\n")
-        third_grid.attach(missions_label, 0, 10, 1, 1)
+        third_grid.attach(missions_label, 0, 11, 1, 1)
 
-        helper.create_pos_group(third_grid, 11, 'Agent Start Conversation', agent_start_conversation_pos, self.on_button_clicked, self._label_for_button)
-        helper.create_pos_group(third_grid, 12, 'Accept Mission', accept_mission_pos, self.on_button_clicked, self._label_for_button)
-        helper.create_pos_group(third_grid, 13, 'Mission Title', mission_title_pos, self.on_button_clicked, self._label_for_button)
-        helper.create_pos_group(third_grid, 14, 'Close Mission', close_mission_pos, self.on_button_clicked, self._label_for_button)
-        helper.create_pos_group(third_grid, 15, 'Mission Path', mission_path_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(third_grid, 12, 'Agent Start Conversation', agent_start_conversation_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(third_grid, 13, 'Accept Mission', accept_mission_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(third_grid, 14, 'Mission Title', mission_title_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(third_grid, 15, 'Close Mission', close_mission_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(third_grid, 16, 'Mission Path', mission_path_pos, self.on_button_clicked, self._label_for_button)
 
-        helper.create_pos_group(third_grid, 16, 'Undock', undock_pos, self.on_button_clicked, self._label_for_button)
+        helper.create_pos_group(third_grid, 17, 'Undock', undock_pos, self.on_button_clicked, self._label_for_button)
 
         self.mouseThread = MouseThread(self, self.x_pos_label, self.y_pos_label)
         self.mouseThread.start()
@@ -308,8 +312,11 @@ class EVEWindow(Gtk.Window):
             kill = KillEnemy()
             kill.start()
 
-            loot_wreck = LootWreck()
-            loot_wreck.start()
+            if kill.is_killed_rare_ship():
+                loot_wreck = LootWreck()
+                loot_wreck.start()
+            else:
+                sleep(5)
 
             warp.start()
 
@@ -325,8 +332,11 @@ class EVEWindow(Gtk.Window):
                     kill = KillEnemy()
                     kill.start()
 
-                    loot_wreck = LootWreck()
-                    loot_wreck.start()
+                    if kill.is_killed_rare_ship():
+                        loot_wreck = LootWreck()
+                        loot_wreck.start()
+                    else:
+                        sleep(5)
 
                 warp.start()
 

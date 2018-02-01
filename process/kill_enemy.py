@@ -12,8 +12,16 @@ enemy_pos = config["main"]["bar_item_pos"]
 attack_module_pos = config["ship"]["attack_module_pos"]
 anomaly_info_close_pos = config["combat"]["anomaly_info_close_pos"]
 
+rare_ship_name = config["combat"]["rare_ship_name"]
+
 
 class KillEnemy(Process):
+    def __init__(self):
+        self._is_killed_rare_ship = False
+
+    def is_killed_rare_ship(self):
+        self._is_killed_rare_ship
+
     def start(self):
         action.click_pos(enemy_bar_pos)
         log.init_time()
@@ -31,7 +39,7 @@ class KillEnemy(Process):
 
                 log.info('\ntarget name: ' + target_info["name"])
 
-                if target_info["name"] == "empty":
+                if target_info["name"] == "empty" or 'metric' not in target_distance:
                     break
 
                 is_target_exist = True
@@ -46,6 +54,10 @@ class KillEnemy(Process):
 
                     log.info('killing target')
                     action.destroy_target()
+
+                    for rare_name in rare_ship_name:
+                        if rare_name in target_info["name"]:
+                            self._is_killed_rare_ship = True
             else:
                 break
 

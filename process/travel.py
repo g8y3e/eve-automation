@@ -50,6 +50,7 @@ class Travel(Process):
                     break
 
                 if clipboard_data is not None and prev_system != clipboard_data and self._is_iter_jump:
+                    sleep(2)
                     break
 
         log.info('# end travel process!')

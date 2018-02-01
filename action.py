@@ -62,6 +62,7 @@ mission_path_pos = config["mission"]["mission_path_pos"]
 
 
 undock_pos = config["main"]["undock_pos"]
+grid_bar_pos = config["main"]["grid_bar_pos"]
 
 
 def active_eve():
@@ -251,7 +252,7 @@ def find_item_in_bar(bar_pos, item_names, start_item_pos=bar_item_pos):
             if item in target_info["name"]:
                 return item_pos
 
-        item_pos[1] = item_pos[1] + 18
+        item_pos[1] = item_pos[1] + 19
 
         if item_pos[1] > item_bar_end_y:
             return None
@@ -282,7 +283,7 @@ def parse_anomaly_data(data):
     return anomaly_info
 
 
-def find_anomaly_pos(anomaly_init_pos, anomaly_list):
+def find_anomaly_pos(anomaly_init_pos, anomaly_list, except_anomaly_ids):
     anomaly_pos = copy.deepcopy(anomaly_init_pos)
 
     prev_anomaly_id = ''
@@ -297,7 +298,13 @@ def find_anomaly_pos(anomaly_init_pos, anomaly_list):
 
             for anomaly_name in anomaly_list:
                 if anomaly_name == anomaly_info['name']:
-                    return anomaly_pos, anomaly_info['name']
+                    is_excepted = False
+                    for except_id in except_anomaly_ids:
+                        if except_id == anomaly_info['id']:
+                            is_excepted = True
+                            break
+                    if not is_excepted:
+                        return anomaly_pos, anomaly_info
 
         anomaly_pos[1] = anomaly_pos[1] + 20
         if (anomaly_pos[1] > anomaly_list_end_y) or len(anomaly_info) == 0:
@@ -322,9 +329,9 @@ def check_warp_end(bar_pos):
         sleep(helper.get_random_delay(3, 8))
 
         if log.elapsed_time() > warp_to_anomaly_timeout:
-            return False
+            return False, target_data
 
-    return True
+    return True, target_data
 
 
 def click_sub_modules():
@@ -488,6 +495,17 @@ def set_mission_destination():
     pyautogui.moveRel(0, 120, duration=0.6)
 
     pyautogui.click()
+
+
+def get_grid_info(current_target):
+    click_pos(grid_bar_pos)
+    click_pos(bar_item_pos)
+
+    sleep(2)
+
+    target_data = parse_target_data(get_target_data())
+
+    return target_data['name'] != current_target['name'], target_data
 
 
 mission_name = "Cargo Delivery Objectives\n"
