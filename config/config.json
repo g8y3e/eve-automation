@@ -1,76 +1,76 @@
 {
     "main": {
         "bar_item_pos": [
-            1176,
-            250
+            1111,
+            251
         ],
         "align_target_pos": [
-            986,
-            128
+            985,
+            135
         ],
         "warp_dock_loot_pos": [
-            1051,
-            131
+            1054,
+            132
         ],
         "anomaly_pos": [
-            570,
-            152
+            613,
+            148
         ],
         "anomaly_warp_x": [
-            709,
-            150
+            757,
+            149
         ],
         "anomaly_list_end_y": [
-            520,
-            519
+            576,
+            518
         ],
         "drone_in_bay_pos": [
-            108,
-            344
+            169,
+            392
         ],
         "active_eve_pos": [
-            415,
-            31
+            130,
+            32
         ],
         "lock_target_pos": [
-            1118,
-            128
+            1117,
+            136
         ],
         "close_inventory_pos": [
-            871,
-            159
+            876,
+            189
         ],
         "loot_all_pos": [
-            468,
-            570
+            487,
+            604
         ],
         "copy_target_data_pos": [
-            1067,
-            91
+            1110,
+            87
         ],
         "travel_title_pos": [
-            80,
-            155
+            78,
+            154
         ],
         "end_travel_title_pos": [
             90,
             209
         ],
         "warp_bar_pos": [
-            1082,
-            210
+            1084,
+            208
         ],
         "wreck_bar_pos": [
             1120,
-            206
+            209
         ],
         "enemy_bar_pos": [
-            1039,
-            204
+            1041,
+            208
         ],
         "item_bar_end_y": [
-            1122,
-            746
+            1118,
+            745
         ],
         "journal_button_pos": [
             18,
@@ -101,8 +101,8 @@
             202
         ],
         "grid_bar_pos": [
-            1235,
-            207
+            1237,
+            209
         ],
         "undock_pos": [
             1151,
@@ -133,16 +133,15 @@
     },
     "combat": {
         "anomaly_info_close_pos": [
-            790,
-            553
+            837,
+            559
         ],
         "optimal_distance": 25000,
         "loot_distance": 2000,
         "rare_ship_name": [
             "Dread",
             "Sentient",
-            "Shadow Serpentis",
-            "Pithi"
+            "Shadow Serpentis"
         ],
         "jam_mobs_name": [
             "Pithi Despoiler",
@@ -169,28 +168,28 @@
     },
     "ship": {
         "sub_modules_pos_1": [
-            789,
-            651
+            784,
+            656
         ],
         "max_speed": 400,
         "timeout": {
             "warp_to_anomaly": 120
         },
         "speed_module_pos": [
-            764,
-            609
+            760,
+            610
         ],
         "sub_modules_pos_2": [
-            764,
-            702
+            814,
+            697
         ],
         "attack_module_pos": [
-            811,
-            608
+            810,
+            611
         ],
         "sub_modules_pos_3": [
-            811,
-            700
+            763,
+            697
         ]
     }
 }

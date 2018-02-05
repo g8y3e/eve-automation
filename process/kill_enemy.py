@@ -20,7 +20,7 @@ class KillEnemy(Process):
         self._is_killed_rare_ship = False
 
     def is_killed_rare_ship(self):
-        self._is_killed_rare_ship
+        return self._is_killed_rare_ship
 
     def start(self):
         action.click_pos(enemy_bar_pos)
