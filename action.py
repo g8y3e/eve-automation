@@ -184,8 +184,8 @@ def destroy_target(with_periscope_drones=False, periscope_timeout=0):
 
         if is_need_reactivate_lock:
             pyautogui.press('l', pause=3)
-            click_pos(lock_target_pos)
             pyautogui.press('f')
+            click_pos(lock_target_pos)
 
         if with_periscope_drones and delta_time >= periscope_timeout:
             delta_time = 0
