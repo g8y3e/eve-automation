@@ -1,56 +1,56 @@
 {
     "main": {
         "bar_item_pos": [
-            1111,
-            251
+            1129,
+            248
         ],
         "align_target_pos": [
-            985,
-            135
+            984,
+            127
         ],
         "warp_dock_loot_pos": [
-            1054,
-            132
+            1051,
+            126
         ],
         "anomaly_pos": [
-            613,
-            148
-        ],
-        "anomaly_warp_x": [
-            757,
+            622,
             149
         ],
+        "anomaly_warp_x": [
+            731,
+            150
+        ],
         "anomaly_list_end_y": [
-            576,
-            518
+            596,
+            538
         ],
         "drone_in_bay_pos": [
-            169,
-            392
+            161,
+            375
         ],
         "active_eve_pos": [
-            130,
-            32
+            101,
+            35
         ],
         "lock_target_pos": [
             1117,
-            136
+            129
         ],
         "close_inventory_pos": [
-            876,
-            189
+            908,
+            186
         ],
         "loot_all_pos": [
-            487,
-            604
+            493,
+            559
         ],
         "copy_target_data_pos": [
-            1110,
-            87
+            1113,
+            86
         ],
         "travel_title_pos": [
-            78,
-            154
+            79,
+            156
         ],
         "end_travel_title_pos": [
             90,
@@ -58,19 +58,19 @@
         ],
         "warp_bar_pos": [
             1084,
-            208
+            207
         ],
         "wreck_bar_pos": [
-            1120,
-            209
+            1122,
+            207
         ],
         "enemy_bar_pos": [
-            1041,
-            208
+            1038,
+            209
         ],
         "item_bar_end_y": [
-            1118,
-            745
+            1142,
+            747
         ],
         "journal_button_pos": [
             18,
@@ -101,7 +101,7 @@
             202
         ],
         "grid_bar_pos": [
-            1237,
+            1234,
             209
         ],
         "undock_pos": [
@@ -133,8 +133,8 @@
     },
     "combat": {
         "anomaly_info_close_pos": [
-            837,
-            559
+            855,
+            557
         ],
         "optimal_distance": 25000,
         "loot_distance": 2000,
@@ -168,8 +168,8 @@
     },
     "ship": {
         "sub_modules_pos_1": [
-            784,
-            656
+            789,
+            657
         ],
         "max_speed": 400,
         "timeout": {
@@ -177,19 +177,19 @@
         },
         "speed_module_pos": [
             760,
-            610
+            611
         ],
         "sub_modules_pos_2": [
-            814,
+            812,
             697
         ],
         "attack_module_pos": [
-            810,
+            809,
             611
         ],
         "sub_modules_pos_3": [
-            763,
-            697
+            766,
+            699
         ]
     }
 }
