@@ -1,0 +1,195 @@
+{
+    "main": {
+        "bar_item_pos": [
+            1129,
+            248
+        ],
+        "align_target_pos": [
+            984,
+            127
+        ],
+        "warp_dock_loot_pos": [
+            1051,
+            126
+        ],
+        "anomaly_pos": [
+            622,
+            149
+        ],
+        "anomaly_warp_x": [
+            731,
+            150
+        ],
+        "anomaly_list_end_y": [
+            596,
+            538
+        ],
+        "drone_in_bay_pos": [
+            161,
+            375
+        ],
+        "active_eve_pos": [
+            101,
+            35
+        ],
+        "lock_target_pos": [
+            1117,
+            129
+        ],
+        "close_inventory_pos": [
+            908,
+            186
+        ],
+        "loot_all_pos": [
+            493,
+            559
+        ],
+        "copy_target_data_pos": [
+            1113,
+            86
+        ],
+        "travel_title_pos": [
+            79,
+            156
+        ],
+        "end_travel_title_pos": [
+            90,
+            209
+        ],
+        "warp_bar_pos": [
+            1084,
+            207
+        ],
+        "wreck_bar_pos": [
+            1122,
+            207
+        ],
+        "enemy_bar_pos": [
+            1038,
+            209
+        ],
+        "item_bar_end_y": [
+            1142,
+            747
+        ],
+        "journal_button_pos": [
+            18,
+            612
+        ],
+        "journal_close_button_pos": [
+            993,
+            262
+        ],
+        "journal_expeditions_pos": [
+            467,
+            282
+        ],
+        "expeditions_item_pos": [
+            510,
+            323
+        ],
+        "expeditions_list_end": [
+            463,
+            545
+        ],
+        "gate_bar_pos": [
+            1178,
+            200
+        ],
+        "struct_bar_pos": [
+            1219,
+            202
+        ],
+        "grid_bar_pos": [
+            1234,
+            209
+        ],
+        "undock_pos": [
+            1151,
+            200
+        ]
+    },
+    "mission": {
+        "agent_start_conversation_pos": [
+            1245,
+            613
+        ],
+        "accept_mission_pos": [
+            755,
+            658
+        ],
+        "mission_title_pos": [
+            612,
+            169
+        ],
+        "close_mission_pos": [
+            1002,
+            138
+        ],
+        "mission_path_pos": [
+            149,
+            208
+        ]
+    },
+    "combat": {
+        "anomaly_info_close_pos": [
+            855,
+            557
+        ],
+        "optimal_distance": 25000,
+        "loot_distance": 2000,
+        "rare_ship_name": [
+            "Dread",
+            "Sentient",
+            "Shadow Serpentis"
+        ],
+        "jam_mobs_name": [
+            "Pithi Despoiler",
+            "Pithi Saboteur"
+        ],
+        "anomaly_name": [
+            "Guristas Hideaway",
+            "Guristas Refuge",
+            "Drone Cluster",
+            "Drone Assembly",
+            "Drone Collection",
+            "Drone Gathering ",
+            "Serpentis Refuge",
+            "Serpentis Hideaway",
+            "Serpentis Burrow"
+        ]
+    },
+    "window": {
+        "title": "EVE automation",
+        "size": [
+            200,
+            100
+        ]
+    },
+    "ship": {
+        "sub_modules_pos_1": [
+            789,
+            657
+        ],
+        "max_speed": 400,
+        "timeout": {
+            "warp_to_anomaly": 120
+        },
+        "speed_module_pos": [
+            760,
+            611
+        ],
+        "sub_modules_pos_2": [
+            812,
+            697
+        ],
+        "attack_module_pos": [
+            809,
+            611
+        ],
+        "sub_modules_pos_3": [
+            766,
+            699
+        ]
+    }
+}
